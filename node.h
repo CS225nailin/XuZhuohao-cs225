@@ -12,9 +12,8 @@ int get_Person_state(); //
 int get_agepriority();
 int get_regday();
 int get_hospital();
-int lastday();
+int lastday;
 int stateupdate(); // 更新state
-int lastday(int date);//calculate the last day to cure
 int cureday; // 治疗的日子 预约的日子+1
 int appday; // 最晚排上预约的日子
 
