@@ -12,7 +12,7 @@ Person_Node::Person_Node(int day,int ID1,int age1, int risklevel, int waiting_ma
       age=age1;
       risk=risklevel;
       name=n;
-      appday=regday+waiting_max;
+      lastday=regday+waiting_max;
       place=where;
       p=p1;
       priority=get_priority();
