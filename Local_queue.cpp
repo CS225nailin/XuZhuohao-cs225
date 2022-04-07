@@ -5,26 +5,30 @@
 #include "Local_queue.h"
 
 Local_queue::Local_queue() {
-    q = new queue<Person_Node>;
-    e = new queue<Person_Node>;
-    p = new queue<Person_Node>;
-    total = new queue<Person_Node>;
+    q = new queue<Person_Node>;    //node that are in the register date
+    e = new queue<Person_Node>;    //node that exceeds the ddl
+    p = new queue<Person_Node>;    //input
+    total = new queue<Person_Node>;  //total node
     return;
 }
 
 void Local_queue::deal(int date) //process and record the status, date, and time for all the patients in queue.
 {
+    Person_Node temp = p->front();
     for(int i = 0; i<p->size(); i++){
-        Person_Node temp = p->front();
         if(temp.regday = date){
             q->push(temp);
         }
+        total.push(temp);
+    }
+    for(int i = 0; i < total->size(); i++){
         if(temp.lastday = date){
             q->pop();
             e->push(temp);
         }
+        total.push(temp);
     }
-    total.push(temp);
+
 }
 
 queue<Person_Node>* Local_queue::get_p(void)
@@ -53,11 +57,3 @@ void Local_queue::search_id(int id){
     }
 }
 
-int Local_queue::tell(int date, Person_Node node){
-    if(node.appday == date){
-        return 1;
-    }
-    q->push(node);
-    return 0;
-
-}
