@@ -19,7 +19,10 @@ int main(){
     string where[3]={"A","C","B"};
     int numitems=0,date=1;
     while(date<=30){
+        cout<<'----------today is day'<<date<<'---------'<<endl;
+        
         while(date==day[numitems]){
+        
         if//（相同ID）
         {
             //update
@@ -27,21 +30,67 @@ int main(){
         else
         {
             Person_Node *pat=new person_Node(Person_Node *pat=new person_Node(day[numitems],numitemsD[numitems],age[numitems],rnumitemssk[numitems],wanumitemstmax[numitems],name[numitems],pro[numitems],where[numitems]);
-            Local->get_p()->push(*pat);//把person_node 加入local
+            Local->get_p()->push(*pat);//把person_node 加入local_p
         }
         numitems++;
                    
         }
-        for(i=0;/**size**/;i++){
-            /*loacl的操作 提供pointer*/
-            Central->record_in(/*local给的pointer*/);
+        Local->deal(date);
+        for(i=0;i<Local->get_q->size();i++){//q有问题
+            Person_Node* somebody=q->front();
+            q->pop();
+            Central->record_in(somebody);
+            
         }
         int counter=0;
+        int max=80;
+        
+        for(i=0;i<Local->get_e->size();i++){//e有问题
+            Person_Node* someone=e->front();
+            e->pop();
+            decrease(Central->search_node(someone),-100);
+            record_out();
+            counter++;
+           
+        }
         //find must be apptoday;
-        for
-        for(i=0;/*max-counter*/;i++){
+        
+        for(i=0;i<max-counter;i++){
             Central->record_out();
         }
+        int operation;
+        int operation2;
+        
+        cout<<"Do you want to withdraw? 1 for yes and others for no"
+        cin>>operation;
+        while(operation == 1){//serch_id 有问题
+           
+            cout<<"Please enter the id"
+            cin>>operation2;
+            FibNode<T> *anyone;
+            Person_Node *anybody=Local->search_id(operation2);
+            if(anybody == NULL){
+                cout<<"You enter an id that does not exist"<<endl;
+                cout<<"Do you still want to withdraw some people? 1 for yes and others for no"<<endl;
+                cin>>operation;
+                continue;
+                
+            }
+            anybody->withdraw=true;
+            anybody->regday=-1;
+
+            anyone=Central->search_node(anybody); 
+            if(anyone==nullptr){
+                cout<<"Do you still want to withdraw some people? 1 for yes and others for no"<<endl;
+                cin>>operation;
+                continue;
+                }
+            Central->removeNode(anyone);
+            
+            cout<<"Do you still want to withdraw some people? 1 for yes and others for no"<<endl;
+            cin>>operation;
+        }
+        
         //print "是否withdraw 0 for yes 1 for no"
         //if 0 go on
         //if 1 ,enter id
