@@ -30,6 +30,8 @@ void report_weekly_monthly(int day)
         default: cout<<"Wrong input! Please restart the program and choose what you want again!"
             break;
         }
+    }
+}
 
         void print_original()
         {
@@ -43,7 +45,7 @@ void report_weekly_monthly(int day)
 
             }
 
-            cout<<"The list that people have registered"<<enl;
+            cout<<"The list that people have registered"<<endl;
             while ("这个节点的next不是null的时候")
             {
                 if("他的状态是已注册的")
@@ -60,6 +62,7 @@ void report_weekly_monthly(int day)
                     cout<<"这个节点的职业，年龄，风险以及排队排了多久了"<<endl;
                 }
             }
+        }
 
         void print_proffession_sorted()
         {
@@ -95,6 +98,7 @@ void report_weekly_monthly(int day)
             
             
         }
+
         void print_age_sorted()
         {
 
@@ -109,7 +113,7 @@ void report_weekly_monthly(int day)
                 }
             }
 
-            cout<<"The list that people have registered"<<enl;
+            cout<<"The list that people have registered"<<endl;
             while ("这个节点的next不是null的时候")
             {
                 if("他的状态是已注册的")
@@ -162,15 +166,3 @@ void report_weekly_monthly(int day)
             }
             
         }
-
-        
-            
-        }
-
-
-    }
-}
-node* pop_sorted()
-{
-    
-}
