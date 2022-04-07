@@ -6,6 +6,10 @@
 // waiting_heap is for medium-risk people and withdraw, high_risk_heap is for high-risk people
 template <class T> CentralQueue<T>::CentralQueue() {
     fib_heap = new FibHeap<T>;
+    reg_heap = new FibHeap<T>;
+    app_heap = new FibHeap<T>;
+    cure_heap = new FibHeap<T>;
+    
    
     return;
 }
@@ -13,10 +17,10 @@ template <class T> CentralQueue<T>::CentralQueue() {
 
 
 // transfer the data from reg_node to fib_node
-template <class T> void CentralQueue<T>::transfer_in(Reg_Node *reg_node, FibNode<T> *fib_node) {//xyxg
+template <class T> void CentralQueue<T>::transfer_in(Person_Node *reg_node, FibNode<T> *fib_node) {//xyxg
     fib_node->origin_node=reg_node;   //record the pointer of the origin personal node
     
-    fib_node->appdate=reg_node->appdate;
+    fib_node->appday=reg_node->appday;
     fib_node->cureday=reg_node->cureday;
     fib_node->p=reg_node->p;
     fib_node->name=reg_node->name;
@@ -31,36 +35,16 @@ template <class T> void CentralQueue<T>::transfer_in(Reg_Node *reg_node, FibNode
 
 	fib_node->priority=reg_node->priority;
 	fib_node->age_priority=reg_node->age_priority;
-/**
-	int cureday; // 治疗的日子 预约的日子+1
-int appday; // 最晚排上预约的日子
-private:
-//information to calculate the priority
-string p;
-string name;
-int ID;
-int profession;
-int risk; //  0 1 2 3 no low midium high
-int age;
-int regday; // 来登记的日子
-//other information
-int person_state;// 排队预约治疗 0 1 2 3 
-bool withdraw; // 退出+14
-string place;
-//all kinds of priorities 
-int priority;
-int age_priority;
-**/
-    
+
  
     
 }
 
 // transfer the data from fib_node to reg_node
-template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {//4.6 am 4.40
+template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {
    
-    Reg_Node *reg_node=fib_node->origin_node;//shengming yige fib_node(personal node)
-    reg_node->appdate=fib_node->appdate;
+    Person_Node *reg_node=fib_node->origin_node;//shengming yige fib_node(person node)
+    reg_node->appday=fib_node->appday;
     reg_node->cureday=fib_node->cureday;
     reg_node->p=fib_node->p;
     reg_node->name=fib_node->name;
@@ -79,15 +63,13 @@ template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {//4
    	 
 	
 
-    //need a appoint day
-    fib_node->appdate=date;
     
-    fib_node->cureday=date+1; // if the person ever withdrew, stat = withdraw
+   
 }
 
 // transfer the data from local registry to center
-// the input is *Reg_Node. call this function will generate a node in the FibHeap
-template <class T> void CentralQueue<T>::record_in(Reg_Node *reg_node) {
+// the input is *Person_Node. call this function will generate a node in the FibHeap
+template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
     if (reg_node == nullptr) {return;}
     
     FibNode<int> *fib_node = new FibNode<int>(0);
@@ -102,32 +84,97 @@ template <class T> void CentralQueue<T>::record_in(Reg_Node *reg_node) {
 // pop a minimum node. (no) it will return a pointer to the node.
 // (no) if there is no node, it will return a NULL pointer
 
-template <class T> Reg_Node *CentralQueue<T>::record_out() {
+template <class T> void *CentralQueue<T>::record_out() {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
-    //XYXG change the heal_day
+    fib_node->appdate=date;
+    fib_node->cureday=date+1; 
+    
    
     
     
-  
-    /**
-    if (fib_node == nullptr) {
-        Reg_Node *reg_node = nullptr;
-        return reg_node;
-    }**/
-    
-    // transfer the data from the fibonacci node to the registry node
+ 
     transfer_out(fib_node);
     
     
-     /**
-    if (fib_node != nullptr) {delete fib_node;} // release the space
-    return reg_node; // considering ptr == NULL
-    **/
+     
+    if (fib_node != nullptr) {delete fib_node;} 
+   
 }
 
 // search the node with key and ID . return a pointer to the node; if not find, return NULL
-template <class T> void CentralQueue<T>::search_node(Reg_Node *reg_node) {
+template <class T> void CentralQueue<T>::record_in_reg(Person_Node *reg_node) {
+    if (reg_node == nullptr) {return;}
+    
+    FibNode<int> *fib_node = new FibNode<int>(0);
+    transfer_in(reg_node, fib_node);
+    
+   
+    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    reg_heap->insert(fib_node);
+   
+}
+template <class T> void CentralQueue<T>::record_in_app(Person_Node *reg_node) {
+    if (reg_node == nullptr) {return;}
+    
+    FibNode<int> *fib_node = new FibNode<int>(0);
+    transfer_in(reg_node, fib_node);
+    
+   
+    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    app_heap->insert(fib_node);
+   
+}
+template <class T> void CentralQueue<T>::record_in_cure(Person_Node *reg_node) {
+    if (reg_node == nullptr) {return;}
+    
+    FibNode<int> *fib_node = new FibNode<int>(0);
+    transfer_in(reg_node, fib_node);
+    
+   
+    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    cure_heap->insert(fib_node);
+   
+}
+template <class T> void *CentralQueue<T>::record_out_reg() {
+    FibNode<T> *fib_node = nullptr;
+    fib_node = reg_heap->removeMin();  
+    transfer_out(fib_node);
+    
+    
+     
+    if (fib_node != nullptr) {delete fib_node;} 
+   
+}
+
+template <class T> void *CentralQueue<T>::record_out_app() {
+    FibNode<T> *fib_node = nullptr;
+    fib_node = app_heap->removeMin();
+    transfer_out(fib_node);
+    if (fib_node != nullptr) {delete fib_node;} 
+   
+}
+
+
+template <class T> void *CentralQueue<T>::record_out_cure() {
+    FibNode<T> *fib_node = nullptr;
+    fib_node = cure_heap->removeMin();
+ 
+    
+   
+    
+    
+ 
+    transfer_out(fib_node);
+    
+    
+     
+    if (fib_node != nullptr) {delete fib_node;} 
+   
+}
+
+
+template <class T> FibNode<T> CentralQueue<T>::search_node(Person_Node *reg_node) {
     FibNode<T> *root_node;
     FibNode<T> *fib_node;
    
@@ -149,7 +196,7 @@ template <class T> void CentralQueue<T>::search_node(Reg_Node *reg_node) {
 
 // the priority change due to profession should be done after this function!!
 //no need
-template <class T> void CentralQueue<T>::change_profession(Reg_Node *reg_node) {
+template <class T> void CentralQueue<T>::change_profession(Person_Node *reg_node) {
     FibNode<T> *fib_node = nullptr;
     FibHeap<T> *heap = nullptr;
     // search the node in the heap
@@ -168,7 +215,7 @@ template <class T> void CentralQueue<T>::change_profession(Reg_Node *reg_node) {
 }
 
 //no need
-template <class T> void CentralQueue<T>::withdraw_heap(Reg_Node *reg_node) {
+template <class T> void CentralQueue<T>::withdraw_heap(Person_Node *reg_node) {
     FibNode<T> *fib_node = nullptr;
     FibHeap<T> *heap = nullptr;
     // search the node in the heap
@@ -186,7 +233,7 @@ template <class T> int CentralQueue<T>::waiting_number() {
     return priority_heap->keyNum + fib_heap->keyNum + waiting_heap->keyNum + high_risk_heap->keyNum;
 }
 //no need
-template <class T> void CentralQueue<T>::build_array(Reg_Node *a, FibNode<T> *root, int n) {
+template <class T> void CentralQueue<T>::build_array(Person_Node *a, FibNode<T> *root, int n) {
     //int len = waiting_number();
     FibNode<T> *tmp = root;    // temporary node
     //FibNode<T> *p = nullptr;    // target node
@@ -210,6 +257,7 @@ template <class T> void CentralQueue<T>::build_array(Reg_Node *a, FibNode<T> *ro
             //break;
         }
         tmp = tmp->right;
+	    
         if (tmp != nullptr) {
             a[n].name = root->name;
             a[n].profession = root->profession;
@@ -224,11 +272,11 @@ template <class T> void CentralQueue<T>::build_array(Reg_Node *a, FibNode<T> *ro
     return;
 }
 
-template <class T> void CentralQueue<T>::sort(Reg_Node *a) {
+template <class T> void CentralQueue<T>::sort(Person_Node *a) {
 
     //static FibNode<T> *ptr = new FibNode<T>[len];
     // int len = waiting_number();
-    // Reg_Node a[len];
+    // Person_Node a[len];
     build_array(a, priority_heap->min, 0);
     build_array(a, fib_heap->min, priority_heap->keyNum);
     build_array(a, waiting_heap->min, priority_heap->keyNum + fib_heap->keyNum);
