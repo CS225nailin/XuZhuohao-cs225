@@ -139,19 +139,20 @@ template <class T> void CentralQueue<T>::record_in_cure(Person_Node *reg_node) {
 template <class T> void *CentralQueue<T>::record_out_reg() {
     FibNode<T> *fib_node = nullptr;
     fib_node = reg_heap->removeMin();  
-    transfer_out(fib_node);
+    Person_Node *person=fib_node->origin_node;
     
-    
-     
     if (fib_node != nullptr) {delete fib_node;} 
+    return person; 
    
 }
 
-template <class T> void *CentralQueue<T>::record_out_app() {
+template <class T>Person_Node  *CentralQueue<T>::record_out_app() {
     FibNode<T> *fib_node = nullptr;
     fib_node = app_heap->removeMin();
-    transfer_out(fib_node);
+    Person_Node *person=fib_node->origin_node;
+    
     if (fib_node != nullptr) {delete fib_node;} 
+    return person;
    
 }
 
@@ -164,12 +165,10 @@ template <class T> void *CentralQueue<T>::record_out_cure() {
    
     
     
- 
-    transfer_out(fib_node);
+ Person_Node *person=fib_node->origin_node;
     
-    
-     
     if (fib_node != nullptr) {delete fib_node;} 
+    return person;
    
 }
 
@@ -257,7 +256,6 @@ template <class T> void CentralQueue<T>::build_array(Person_Node *a, FibNode<T> 
             //break;
         }
         tmp = tmp->right;
-	    
         if (tmp != nullptr) {
             a[n].name = root->name;
             a[n].profession = root->profession;
