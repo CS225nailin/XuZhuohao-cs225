@@ -1,7 +1,12 @@
-#include "node.h"
+#include <stdio.h>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include "node.cpp"
 #include "Local_queue.h"
-#include "Fibheap.h"
-void report_weekly_monthly(int day)
+#include "centralqueue.cpp"
+
+void report_weekly_monthly(int day, Local_queue* Local, CentralQueue<int>* Central)
 {
     if (day%7 == 0)
     {
@@ -19,7 +24,7 @@ void report_weekly_monthly(int day)
         switch (sort_selection)
         {
         case 1:
-            print_original();
+            print_original(Local,day,Central);
             break;
         case 2:
             print_proffession_sorted();
@@ -30,75 +35,78 @@ void report_weekly_monthly(int day)
         case 4:
             print_name_sorted();
             break;
-        default: cout<<"Wrong input! Please restart the program and choose what you want again!"
+        default: cout<<"Wrong input! Please restart the program and choose what you want again!";
             break;
         }
     }
+    else
+    {
+        return;
+    }
 }
-
-        void print_original()
+int i;
+        void print_original(Local_queue* Local, int day,  CentralQueue<int>* Central)
         {
             Person_Node *cured;
             int counter;
             cout<<"The list that peopcole have been treated"<<endl;
-            for(i = 0; i < total->size(); i++)
+            for(i = 0; i < Local->get_total()->size(); i++)
             {
-                int cured_day = total->front()->regday;
-                cured = total->front();
-                total->push(total->front);
-                total->pop();
+                int cured_day = Local->get_total()->front().cureday;
+                cured = &(Local->get_total()->front());
+                Local->get_total()->push(Local->get_total()->front());
+                Local->get_total()->pop();
                 if(day - 7 <= cured_day <= day)
                 {
-                    record_in_cure(cured);
+                    Central->record_in_cure(cured);
                     counter++;
                 }
             }
             for(i = 0; i < counter; i++)
             {
-                cured = record_out_cure();
-                cout<<cured->proffesion<<"  "<<cured->age<<"  "<<cured->risk<<"  "<<day - cured->regday<<endl;
+                cured = Central->record_out_cure();
+                cout<<cured->profession<<"  "<<cured->age<<"  "<<cured->risk<<"  "<<day - cured->regday<<endl;
             }
-        }
             Person_Node *registed;
             counter = 0;
             cout<<"The list that people have registered"<<endl;
-            for(i = 0; i < total->size(); i++)
+            for(i = 0; i < Local->get_total()->size(); i++)
             {
-                int registed_day = total->front()->regday;
-                cured = total->front();
-                total->push(total->front);
-                total->pop();
+                int registed_day = Local->get_total()->front().regday;
+                registed = &(Local->get_total()->front());
+                Local->get_total()->push(Local->get_total()->front());
+                Local->get_total()->pop();
                 if(day - 7 <= registed_day <= day)
                 {
-                    record_in_reg(registed);
+                    Central->record_in_reg(registed);
                     counter++;
                 }
             }
             for(i = 0; i < counter; i++)
             {
-                registed = record_out_reg();
-                cout<<registed->proffesion<<"  "<<registed->age<<"  "<<registed->risk<<"  "<<day - registed->regday<<endl;
+                registed = Central->record_out_reg();
+                cout<<registed->profession<<"  "<<registed->age<<"  "<<registed->risk<<"  "<<day - registed->regday<<endl;
             }
-        }
+
             counter = 0;
             Person_Node* appointed;
             cout<<"The list that people is queueing"<<endl;
-            for(i = 0; i < total->size(); i++)
+            for(i = 0; i < Local->get_total()->size(); i++)
             {
-                int appointed_day = total->front()->appday;
-                cured = total->front();
-                total->push(total->front());
-                total->pop();
+                int appointed_day = Local->get_total()->front().appday;
+                appointed = &(Local->get_total()->front());
+                Local->get_total()->push(Local->get_total()->front());
+                Local->get_total()->pop();
                 if(day - 7 <= appointed_day <= day)
                 {
-                    record_in_reg(appointed);
+                    Central->record_in_reg(appointed);
                     counter++;
                 }
             }
             for(i = 0; i < counter; i++)
             {
-                registed = record_out_app();
-                cout<<appointed->proffesion<<"  "<<appointed->age<<"  "<<appointed->risk<<"  "<<day - appointed->regday<<endl;
+                registed = Central->record_out_app();
+                cout<<appointed->profession<<"  "<<appointed->age<<"  "<<appointed->risk<<"  "<<day - appointed->regday<<endl;
             }
         }
 
@@ -140,7 +148,7 @@ cout<<"暂不支持";}
 */
         void print_age_sorted()
         {
-cout<<"暂不支持"}
+cout<<"暂不支持";}
 /*
             //用斐波那契堆排序
 

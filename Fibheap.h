@@ -8,8 +8,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include "node.cpp"
 
-#include "Registry.h"
 
 using namespace std;
 template <class T> class FibNode;
@@ -39,16 +39,19 @@ public:
     //X void sort(Person_Node *a);
     // void fetch(vector<Person_Node> *a);
     
-private:
+//private:
     //X int date; // tomorrow's date
     void transfer_in(Person_Node *reg_node, FibNode<T> *fib_node); // transfer the data from reg_node to fib_node
-    void transfer_out(Person_Node *reg_node, FibNode<T> *fib_node); // transfer the data from fib_node to reg_node
-    FibNode<T> *search_node(Person_Node *reg_node, FibHeap<T> **heap, FibNode<T> **fib_node); // search a node
+    void transfer_out( FibNode<T> *fib_node); // transfer the data from fib_node to reg_node
+    FibNode<T>* search_node(Person_Node *reg_node); // search a node
     
     //X void build_array(Person_Node *a, FibNode<T> *root, int n);
    //  void build_vecotr(vector<Person_Node> *a, FibNode<T> *root, int n);
     
     FibHeap<T> *fib_heap; // the central queue
+    FibHeap<T> *reg_heap;
+    FibHeap<T> *app_heap;
+    FibHeap<T> *cure_heap;
    
 };
 
@@ -117,13 +120,13 @@ public:
     bool minimum(T *pkey); // Get the minimum key value in the Fibonacci heap and save it to the pkey; success returns true, otherwise returns false.
 
 
-private:
+public:
     int keyNum;         // the number of nodes in the heap
     int maxDegree;      // the maximum degree
     FibNode<T> *min;    // a pointer to the minimum node
     FibNode<T> **cons;    // the memory area of the maximum degree
     
-private:
+public:
     void removeNode(FibNode<T> *node); // remove node from the double link list
     void addNode(FibNode<T> *node, FibNode<T> *root); // add node to the left of the root
     void link(FibNode<T>* node, FibNode<T>* root); // list node to the root list

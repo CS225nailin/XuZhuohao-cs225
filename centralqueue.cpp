@@ -1,14 +1,17 @@
-#include "FibHeap.h"
+#include "FibHeap.cpp"
+#include "node.cpp"
+#include "Fibheap.h"
+
 
 // following are functions of CentralQueue
 // constructor, generate the 4 heaps
 // fib_heap is for normal people, priority_heap is for those with priority letters,
 // waiting_heap is for medium-risk people and withdraw, high_risk_heap is for high-risk people
 template <class T> CentralQueue<T>::CentralQueue() {
-    fib_heap = new FibHeap<T>;
-    reg_heap = new FibHeap<T>;
-    app_heap = new FibHeap<T>;
-    cure_heap = new FibHeap<T>;
+    FibHeap<T>* fib_heap = new FibHeap<T>;
+    FibHeap<T>* reg_heap = new FibHeap<T>;
+    FibHeap<T>* app_heap = new FibHeap<T>;
+    FibHeap<T>* cure_heap = new FibHeap<T>;
     
    
     return;
@@ -84,7 +87,7 @@ template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
 // pop a minimum node. (no) it will return a pointer to the node.
 // (no) if there is no node, it will return a NULL pointer
 
-template <class T> void *CentralQueue<T>::record_out() {
+template <class T> void CentralQueue<T>::record_out() {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
     fib_node->appdate=date;
@@ -173,7 +176,7 @@ template <class T> Person_Node *CentralQueue<T>::record_out_cure() {
 }
 
 
-template <class T> FibNode<T> CentralQueue<T>::search_node(Person_Node *reg_node) {
+template <class T> FibNode<T>* CentralQueue<T>::search_node(Person_Node *reg_node) {
     FibNode<T> *root_node;
     FibNode<T> *fib_node;
    
@@ -195,23 +198,7 @@ template <class T> FibNode<T> CentralQueue<T>::search_node(Person_Node *reg_node
 
 // the priority change due to profession should be done after this function!!
 //no need
-template <class T> void CentralQueue<T>::change_profession(Person_Node *reg_node) {
-    FibNode<T> *fib_node = nullptr;
-    FibHeap<T> *heap = nullptr;
-    // search the node in the heap
-    search_node(reg_node, &heap, &fib_node);
-    // not find
-    if (fib_node == nullptr) {return;}
-    
-    int old_profession = fib_node->profession;
-    fib_node->profession = reg_node->profession;
-    
-    reg_node->standard_priority = (reg_node->profession - 1) * 28 + (reg_node->age_group - 1) * 4 +fib_node->risk;
-    if (old_profession <= fib_node->profession) {return;}
-    fib_node->priority = reg_node->standard_priority;
-    heap->decrease(fib_node, fib_node->priority);
-    return;
-}
+
 
 //no need
 template <class T> void CentralQueue<T>::withdraw_heap(Person_Node *reg_node) {
@@ -227,59 +214,4 @@ template <class T> void CentralQueue<T>::withdraw_heap(Person_Node *reg_node) {
     return;
 }
 
-//no need
-template <class T> int CentralQueue<T>::waiting_number() {
-    return priority_heap->keyNum + fib_heap->keyNum + waiting_heap->keyNum + high_risk_heap->keyNum;
-}
-//no need
-template <class T> void CentralQueue<T>::build_array(Person_Node *a, FibNode<T> *root, int n) {
-    //int len = waiting_number();
-    FibNode<T> *tmp = root;    // temporary node
-    //FibNode<T> *p = nullptr;    // target node
-
-    if (root == nullptr)
-        return; // protect the stability
-
-    do
-    {
-        //ptr[n] = &root;
-        a[n].name = root->name;
-        a[n].profession = root->profession;
-        a[n].age_group = root->age_group;
-        a[n].risk = root->risk;
-        a[n].queTime = date - root->Reg_Day;
-        n++;
-        
-        if (root->child != nullptr){
-            build_array(a, root->child, n);
-            
-            //break;
-        }
-        tmp = tmp->right;
-        if (tmp != nullptr) {
-            a[n].name = root->name;
-            a[n].profession = root->profession;
-            a[n].age_group = root->age_group;
-            a[n].risk = root->risk;
-            a[n].queTime = date - root->Reg_Day;
-            n++;
-        }
-        
-    } while (tmp != root);
-
-    return;
-}
-
-template <class T> void CentralQueue<T>::sort(Person_Node *a) {
-
-    //static FibNode<T> *ptr = new FibNode<T>[len];
-    // int len = waiting_number();
-    // Person_Node a[len];
-    build_array(a, priority_heap->min, 0);
-    build_array(a, fib_heap->min, priority_heap->keyNum);
-    build_array(a, waiting_heap->min, priority_heap->keyNum + fib_heap->keyNum);
-    build_array(a, high_risk_heap->min, priority_heap->keyNum + fib_heap->keyNum + waiting_heap->keyNum);
-    
-    return;
-}
 

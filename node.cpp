@@ -20,7 +20,7 @@ Person_Node::Person_Node(int day,int ID1,int age1, int risklevel, int waiting_ma
       person_state=0;
       withdraw=false;//如果二次出现且没有被治疗过withdraw=TRUE 表示已经
 }
-Person_Node::get_priority(){
+int Person_Node::get_priority(){
     //优先级规则 职业，年龄（老的优先），risk
     int agl;
     if(age<=12){
@@ -71,7 +71,7 @@ void Person_Node::update(Person_Node *patient, int day){
         patient->regday=day+14;
     }
 }
-Person_Node::get_agepriority(){
+int Person_Node::get_agepriority(){
      int agl;
     if(age<=12){
         agl=1;
@@ -90,10 +90,10 @@ Person_Node::get_agepriority(){
     }
     return agl;
 }
-Person_Node::get_regday(){
+int Person_Node::get_regday(){
     return regday;
 }
-Person_Node::get_hospital(){
+int Person_Node::get_hospital(){
     if (place=="A"|| place=="B"){
         hospital=1;
     }else if(place=="C"|| place=="D"){
