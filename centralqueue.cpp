@@ -89,7 +89,7 @@ template <class T> void *CentralQueue<T>::record_out() {
     fib_node = fib_heap->removeMin();
     fib_node->appdate=date;
     fib_node->cureday=date+1; 
-    
+   
    
     
     

@@ -18,15 +18,15 @@ int main(){
     string name[3]={"czx","dasd","ds"};
     string pro[3]={"teacher","police","soider"};
     string where[3]={"A","C","B"};
-    int numitems=0,date=1;
+    int numitems =0,date =1;
     while(date<=30){
         cout<<'----------today is day'<<date<<'---------'<<endl;
         
         while(date==day[numitems]){
         
-        if//（相同ID）
+        if(Local->search_id(ID[numitems]) != nullptr))
         {
-            //update
+            Local->search_id(ID[numitems])->update(Local->search_id(ID[numitems]),date);
         }
         else
         {
