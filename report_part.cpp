@@ -6,12 +6,6 @@
 #include "Local_queue.h"
 #include "centralqueue.cpp"
 
-void print_original(Local_queue* Local, int day,  CentralQueue<int>* Central);
-void print_proffession_sorted();
-void print_age_sorted();
-void print_name_sorted()
-
-
 void report_weekly_monthly(int day, Local_queue* Local, CentralQueue<int>* Central)
 {
     if (day%7 == 0)
@@ -121,6 +115,7 @@ int i;
 cout<<"暂不支持";}
 /*
             //用斐波那契堆排序
+
             cout<<"The list that people have been treated"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -129,6 +124,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册到治疗之间花的时间"<<endl;
                 }
             }
+
             cout<<"The list that people have registered"<<enl;
             while ("这个节点的next不是null的时候")
             {
@@ -137,6 +133,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册至今共多少时间"<<endl;
                 }   
             }
+
             cout<<"The list that people is queueing"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -154,6 +151,7 @@ cout<<"暂不支持";}
 cout<<"暂不支持";}
 /*
             //用斐波那契堆排序
+
             cout<<"The list that people have been treated"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -162,6 +160,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册到治疗之间花的时间"<<endl;
                 }
             }
+
             cout<<"The list that people have registered"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -170,6 +169,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册至今共多少时间"<<endl;
                 }   
             }
+
             cout<<"The list that people is queueing"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -178,12 +178,14 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及排队排了多久了"<<endl;
                 }
             }
+
         }
 */
         void print_name_sorted()
         {
             cout<<"暂不支持";}
             /*
+
             //用姓名排序
             
             cout<<"The list that people have been treated"<<endl;
@@ -194,6 +196,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册到治疗之间花的时间"<<endl;
                 }
             }
+
             cout<<"The list that people have registered"<<enl;
             while ("这个节点的next不是null的时候")
             {
@@ -202,6 +205,7 @@ cout<<"暂不支持";}
                     cout<<"这个节点的职业，年龄，风险以及从注册至今共多少时间"<<endl;
                 }   
             }
+
             cout<<"The list that people is queueing"<<endl;
             while ("这个节点的next不是null的时候")
             {
@@ -212,10 +216,13 @@ cout<<"暂不支持";}
             }
             
         }
+
+
 int cureday; // 治疗的日子 预约的日子+1
 int appday; // 最晚排上预约的日子
 int regday; // 来登记的日子
 // day >= cureday 得到结论 cured
 // day == appday 得到结论 已注册
 //  REGDAY <=DAY < APPDAY => 排队说
+
 */
