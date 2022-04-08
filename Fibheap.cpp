@@ -35,13 +35,13 @@ template <class T> void FibHeap<T>::insert(FibNode<T> *node) {
     if (node == nullptr)
         return ;
     
-    //if (keyNum == 0)
-    //   min = node;
+    if (this->min== nullptr)
+       min = node;
     else
        {
-        addNode(node, min);
+        addNode(node, this->min);
         if (node->key < min->key)
-            min = node;
+            this->min = node;
     }
     keyNum++;
 }
