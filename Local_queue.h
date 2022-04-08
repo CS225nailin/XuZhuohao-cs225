@@ -14,10 +14,10 @@ using std::endl;
 class Local_queue
 {
 private:
-    queue<Person_Node>* q; // fifo queue.
-    queue<Person_Node>* p; // database queue
-    queue<Person_Node>* total;
-    queue<Person_Node>* e;
+    queue<Person_Node>* q; // output queue, it will contain the node registering at this date
+    queue<Person_Node>* p; // input queue, it will receive all the input node abtained in the file
+    queue<Person_Node>* total;  //total queue contain all the node until this date
+    queue<Person_Node>* e;  //output queue, contain the people that are at the ddl
     int FIFO();
 public:
     void deal(int date); //process and record the status, date, and time for all the patients in queue.
@@ -34,4 +34,6 @@ public:
     */
     queue<Person_Node>* get_q();
     queue<Person_Node>* get_p();
+    queue<Person_Node>* get_e();
+    queue<Person_Node>* get_total();
 };
