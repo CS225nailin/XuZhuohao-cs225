@@ -23,7 +23,7 @@ int regday;
 void update(Person_Node *patient,int day);
 
 
-private:
+//private:
 //information to calculate the priority
 int hospital;
 string name;
