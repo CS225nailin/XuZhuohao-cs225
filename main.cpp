@@ -237,14 +237,14 @@ int main(){
     CentralQueue<int>* Central = new CentralQueue<int>;
     Local_queue* Local = new Local_queue;
     
-    int day[4]={1,1,2,3};
-    int ID[4]={320011,320012,320013,320014};
-    int age[4]={18,19,50,20};
-    int risk[4]={0,1,1,1};
-    int waitmax[4]={3,6,9,4};
-    string name[4]={"czx","dasd","ds","dsa"};
-    string pro[4]={"teacher","police","soider","soider"};
-    string where[4]={"A","C","B","C"};
+    int day[12]={1,1,1,1,2,2,2,2,3,3,3,3};
+    int ID[12]={320011,320012,320013,320014,1,2,3,4,5,6,7,8};
+    int age[12]={18,19,50,20,18,19,50,20,18,19,50,20};
+    int risk[12]={0,1,1,1,0,1,1,1,0,1,1,1};
+    int waitmax[12]={3,6,9,4,3,6,9,4,3,6,9,4};
+    string name[12]={"czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa"};
+    string pro[12]={"teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider"};
+    string where[12]={"A","C","B","C","A","C","B","C","A","C","B","C"};
     int numitems =0,date =1;
     while(date<=30){
         cout<<"----------today is day"<<date<<"---------"<<endl;
@@ -276,7 +276,7 @@ int main(){
             
             Local->get_q()->pop();
             
-            Central->record_in(somebody);
+           Central->record_in(somebody);
             
             
         }
@@ -302,7 +302,7 @@ int main(){
         int operation;
         int operation2;
         
-        cout<<"Do you want to withdraw? 1 for yes and others for no";
+        cout<<"Do you want to withdraw? 1 for yes and others for no"<<endl;
         cin>>operation;
         while(operation == 1){
            

@@ -6,8 +6,8 @@
 template <class T> FibHeap<T>::FibHeap() {
     keyNum = 0;
     maxDegree = 0;
-    min = nullptr;
-    cons = nullptr;
+    min = NULL;
+    cons = NULL;
 }
 
 // destructor
@@ -31,19 +31,19 @@ template <class T> void FibHeap<T>::addNode(FibNode<T> *node, FibNode<T> *root) 
 template <class T> void FibHeap<T>::insert(FibNode<T> *node) {
     //FibNode<T> *node;
 
-    //node = new FibNode<T>(key);
-    if (node == nullptr)
+    //node = new FibNode<T>(0);
+    if (node == NULL)
         return ;
     
-    if (this->min== nullptr)
-       min = node;
+    if (this->min== NULL)
+       this->min = node;
     else
        {
         addNode(node, this->min);
         if (node->key < min->key)
             this->min = node;
     }
-    keyNum++;
+    this->keyNum++;
 }
 
 // remove the min value node from the root list
@@ -51,7 +51,7 @@ template <class T> FibNode<T>* FibHeap<T>::extractMin() {
     FibNode<T> *ptr = min;
 
     if (ptr == ptr->right)
-        min = nullptr;
+        min = NULL;
     else
     {
         removeNode(ptr);
@@ -67,7 +67,7 @@ template <class T> void FibHeap<T>::link(FibNode<T>* node, FibNode<T>* root) {
     // remove node from the double link list
     removeNode(node);
     // set node as root's child
-    if (root->child == nullptr)
+    if (root->child == NULL)
         root->child = node;
     else
         addNode(node, root->child);
@@ -100,34 +100,34 @@ template <class T> void FibHeap<T>::consolidate() {
     big_degree = maxDegree + 1;
 
     for (i = 0; i < big_degree; i++)
-        cons[i] = nullptr;
+        cons[i] = NULL;
 
     // merge root nodes of the same degree so that the tree of each degree is unique
-    while (min != nullptr)
+    while (min != NULL)
     {
         x = extractMin();                // fetch the smallest tree in the heap
         degree = x->degree;                    // get the degree of the smallest tree
         // cons[d] != NULL, means there are two trees with the same degree
-        while (cons[degree] != nullptr)
+        while (cons[degree] != NULL)
         {
             y = cons[degree];                // y is a tree which has the same degree as x
             if (x->key > y->key)        // ensure that the key value of x is smaller than y
                 swap(x, y);
 
             link(y, x);    // link y to x
-            cons[degree] = nullptr;
+            cons[degree] = NULL;
             degree++;
         }
         cons[degree] = x;
     }
-    min = nullptr;
+    min = NULL;
 
     // re-add the nodes in cons to the root table
     for (i = 0; i < big_degree; i++)
     {
-        if (cons[i] != nullptr)
+        if (cons[i] != NULL)
         {
-            if (min == nullptr)
+            if (min == NULL)
                 min = cons[i];
             else
             {
@@ -141,23 +141,23 @@ template <class T> void FibHeap<T>::consolidate() {
 
 // remove the min node
 template <class T> FibNode<T> *FibHeap<T>::removeMin() {
-    if (min==nullptr)
-        return nullptr;
+    if (min==NULL)
+        return NULL;
 
-    FibNode<T> *child = nullptr;
+    FibNode<T> *child = NULL;
     FibNode<T> *move = min;
     // add min's child and its brothers to the root list
-    while (move->child != nullptr)
+    while (move->child != NULL)
     {
         child = move->child;
         removeNode(child);
         if (child->right == child)
-            move->child = nullptr;
+            move->child = NULL;
         else
             move->child = child->right;
 
         addNode(child, min);
-        child->parent = nullptr;
+        child->parent = NULL;
     }
 
     // remove m from the root list
@@ -165,7 +165,7 @@ template <class T> FibNode<T> *FibHeap<T>::removeMin() {
     // if m is the only node in the heap, set the smallest node of the heap to NULL
     // otherwise, set the smallest node of the heap to a non-empty node (m->right), and then adjust it.
     if (move->right == move)
-        min = nullptr;
+        min = NULL;
     
     else {
         min = move->right;
@@ -178,7 +178,7 @@ template <class T> FibNode<T> *FibHeap<T>::removeMin() {
 
 // Get the minimum key value in the Fibonacci heap and save it to the pkey; success returns true, otherwise returns false.
 template <class T> bool FibHeap<T>::minimum(T *ptr) {
-    if (min==nullptr || ptr==nullptr)
+    if (min==NULL || ptr==NULL)
         return false;
 
     *ptr = min->key;
@@ -188,7 +188,7 @@ template <class T> bool FibHeap<T>::minimum(T *ptr) {
 // update degrees
 template <class T> void FibHeap<T>::renewDegree(FibNode<T> *parent, int degree) {
     parent->degree -= degree;
-    if (parent-> parent != nullptr)
+    if (parent-> parent != NULL)
         renewDegree(parent->parent, degree);
 }
 
@@ -198,11 +198,11 @@ template <class T> void FibHeap<T>::cut(FibNode<T> *node, FibNode<T> *parent) {
     renewDegree(parent, node->degree);
     // node has no brothers
     if (node == node->right)
-        parent->child = nullptr;
+        parent->child = NULL;
     else
         parent->child = node->right;
 
-    node->parent = nullptr;
+    node->parent = NULL;
     node->left = node->right = node;
     node->marked = false;
     // add the node tree to the root list
@@ -220,7 +220,7 @@ template <class T> void FibHeap<T>::cut(FibNode<T> *node, FibNode<T> *parent) {
  */
 template <class T> void FibHeap<T>::cascadingCut(FibNode<T> *node) {
     FibNode<T> *parent = node->parent;
-    if (parent != nullptr)
+    if (parent != NULL)
     {
         if (node->marked == false)
             node->marked = true;
@@ -236,7 +236,7 @@ template <class T> void FibHeap<T>::cascadingCut(FibNode<T> *node) {
 template <class T> void FibHeap<T>::decrease(FibNode<T> *node, T key) {
     FibNode<T> *parent;
 
-    if (min == nullptr ||node == nullptr)
+    if (min == NULL ||node == NULL)
         return ;
 
     if ( key>=node->key)
@@ -247,7 +247,7 @@ template <class T> void FibHeap<T>::decrease(FibNode<T> *node, T key) {
 
     node->key = key;
     parent = node->parent;
-    if (parent != nullptr && node->key < parent->key)
+    if (parent != NULL && node->key < parent->key)
     {
         // strip the node from its parent parent and add the node to the root chain table
         cut(node, parent);
@@ -263,9 +263,9 @@ template <class T> void FibHeap<T>::decrease(FibNode<T> *node, T key) {
 // search the exact person recursively, according to the key and ID; if not find, return NULL
 template <class T> FibNode<T>* FibHeap<T>::id_search(FibNode<T> *root, T key, int ID) {
     FibNode<T> *tmp = root;    // temporary node
-    FibNode<T> *p = nullptr;    // target node
+    FibNode<T> *p = NULL;    // target node
 
-    if (root == nullptr)
+    if (root == NULL)
         return root; // protect the stability
 
     do
@@ -277,7 +277,7 @@ template <class T> FibNode<T>* FibHeap<T>::id_search(FibNode<T> *root, T key, in
         }
         else
         {
-            if ((p = id_search(tmp->child, key, ID)) != nullptr)
+            if ((p = id_search(tmp->child, key, ID)) != NULL)
                 break;
         }
         tmp = tmp->right;
