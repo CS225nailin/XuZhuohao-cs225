@@ -7,7 +7,7 @@
 Local_queue::Local_queue() {
     q = new queue<Person_Node>;    //node that are in the register date
     e = new queue<Person_Node>;    //node that exceeds the ddl
-    p = new queue<Person_Node>;    //input
+    p = new queue<Person_Node>;    //node input at that date
     total = new queue<Person_Node>;  //total node
     return;
 }
@@ -79,7 +79,7 @@ Person_Node *Local_queue::search_id(int id){     //iterate the total queue datab
     for(int i=0; i < this->total->size(); i++){  //iteration
         Person_Node *A;
         *A = this->total->front();     //get the node in the head of the queue
-        if(this->total->front().ID == id){
+        if(this->total->front().ID == id){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ID == id){
             Person_Node *A = new Person_Node;
             return A;     //update the sameid person_node*, it is a class pointer
         }
