@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <string>
 #include "node.cpp"
+#include "Local_queue.h"
 using std::string;
 using std::cout;
 using namespace std;
