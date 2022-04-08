@@ -34,6 +34,10 @@ void report_weekly_monthly(int day)
             break;
         }
     }
+    else
+    {
+        return;
+    }
 }
 
         void print_original()
