@@ -65,6 +65,12 @@ Person_Node::get_priority(){
     }
     return p;
 }
+void Person_Node::update(Person_Node *patient, int day){
+    patient->regday=day;
+    if(withdraw==true){
+        patient->regday=day+14;
+    }
+}
 Person_Node::get_agepriority(){
      int agl;
     if(age<=12){
