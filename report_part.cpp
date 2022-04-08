@@ -1,6 +1,9 @@
-#include "node.h"
+#include <stdio.h>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include "node.cpp"
 #include "Local_queue.h"
-#include "Fibheap.h"
 void report_weekly_monthly(int day)
 {
     if (day%7 == 0)
