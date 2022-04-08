@@ -21,7 +21,7 @@ private:
 public:
     Local_queue();
     void deal(int date); //process and record the status, date, and time for all the patients in queue.
-    void search_id(int id);
+    Person_Node *search_id(int id);  //
     Person_Node *sameid;  //used for search the same id, in case someone has registered for two times
     /* queue库里的：
     q.empty()       //若队列为空 返回true 否则返回false
