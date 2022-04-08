@@ -14,43 +14,42 @@ Local_queue::Local_queue() {
 
 void Local_queue::deal(int date) //record all the patients, and be ready to pass them to central queue
 {
-    for(int i = 0; i<p->size(); i++){  //iterate the input queue
+    for(int i = 0; i<this->p->size(); i++){  //iterate the input queue
         Person_Node *A = new Person_Node;  //give a new space for this node
-        *A = p->front();
+        *A = this->p->front();
         if(A->get_regday() == date){  //if that node/person's register day is this date
-            p->pop();
+            this->p->pop();
             Person_Node *B;   
             B=A;  
-            q->push(*B);      //push this node to q queue to give to central
+            this->q->push(*B);      //push this node to q queue to give to central
             Person_Node *C;
-            C = A;
-            total->push(*C);  //store this node to database
+            C=A;
+            this->total->push(*C);  //store this node to database
         }
         else{
-            p->pop();         //if not, give it back to p queue
+            this->p->pop();         //if not, give it back to p queue
             Person_Node *B;
             B=A;  
-            p->push(*B);
-        }
-        
+            this->p->push(*B);
+        }    
     }
-    for(int i = 0; i<total->size(); i++){  //iterate the total queue
+    for(int i = 0; i<this->total->size(); i++){  //iterate the total queue
         Person_Node *A = new Person_Node;
-        *A = p->front();
+        *A = this->p->front();
         if(A->lastday == date){  //if that node/person is at the ddl at this date
-            p->pop();
+            this->p->pop();
             Person_Node *B;
             B=A;  
-            e->push(*B);      //push this node to e queue to give to central
+            this->e->push(*B);      //push this node to e queue to give to central
             Person_Node *C;
             C = A;
-            total->push(*C);  //store this node to database
+            this->total->push(*C);  //store this node to database
         }
         else{
-            total->pop();         //if not at ddl, give it back to total queue
+            this->total->pop();         //if not at ddl, give it back to total queue
             Person_Node *B;
             B=A;
-            total->push(*B);  
+            this->total->push(*B);  
         }
     }
 }
@@ -77,13 +76,13 @@ queue<Person_Node>* Local_queue::get_total(void)
 }
 
 void Local_queue::search_id(int id){     //iterate the total queue database, find the node which has the same id 
-    for(int i=0; i < total->size(); i++){  //iteration
+    for(int i=0; i < this->total->size(); i++){  //iteration
         Person_Node *A;
-        *A = total->front();     //get the node in the head of the queue
-        if(total->front().ID == id){
+        *A = this->total->front();     //get the node in the head of the queue
+        if(this->total->front().ID == id){
             sameid = A;          //update the sameid person_node*, it is a class pointer
         }
-        total->pop();           //pop the head node
-        total->push(*A);        //push it to the back of the queue
+        this->total->pop();           //pop the head node
+        this->total->push(*A);        //push it to the back of the queue
     }
 }
