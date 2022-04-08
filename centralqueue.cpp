@@ -110,7 +110,7 @@ template <class T> void CentralQueue<T>::record_in_reg(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
     reg_heap->insert(fib_node);
    
 }
@@ -121,7 +121,7 @@ template <class T> void CentralQueue<T>::record_in_app(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
     app_heap->insert(fib_node);
    
 }
@@ -132,7 +132,7 @@ template <class T> void CentralQueue<T>::record_in_cure(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
     cure_heap->insert(fib_node);
    
 }
