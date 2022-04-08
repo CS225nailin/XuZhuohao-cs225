@@ -75,12 +75,13 @@ queue<Person_Node>* Local_queue::get_total(void)
     return total;
 }
 
-void Local_queue::search_id(int id){     //iterate the total queue database, find the node which has the same id 
+Person_Node *Local_queue::search_id(int id){     //iterate the total queue database, find the node which has the same id 
     for(int i=0; i < this->total->size(); i++){  //iteration
         Person_Node *A;
         *A = this->total->front();     //get the node in the head of the queue
         if(this->total->front().ID == id){
-            sameid = A;          //update the sameid person_node*, it is a class pointer
+            Person_Node *A = new Person_Node;
+            return A;     //update the sameid person_node*, it is a class pointer
         }
         this->total->pop();           //pop the head node
         this->total->push(*A);        //push it to the back of the queue
