@@ -136,7 +136,7 @@ template <class T> void CentralQueue<T>::record_in_cure(Person_Node *reg_node) {
     cure_heap->insert(fib_node);
    
 }
-template <class T> void *CentralQueue<T>::record_out_reg() {
+template <class T> Person_Node *CentralQueue<T>::record_out_reg() {
     FibNode<T> *fib_node = nullptr;
     fib_node = reg_heap->removeMin();  
     Person_Node *person=fib_node->origin_node;
@@ -157,7 +157,7 @@ template <class T>Person_Node  *CentralQueue<T>::record_out_app() {
 }
 
 
-template <class T> void *CentralQueue<T>::record_out_cure() {
+template <class T> Person_Node *CentralQueue<T>::record_out_cure() {
     FibNode<T> *fib_node = nullptr;
     fib_node = cure_heap->removeMin();
  

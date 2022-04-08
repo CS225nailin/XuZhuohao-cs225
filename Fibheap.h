@@ -24,7 +24,13 @@ public:
     // these are the functions needed in other files
     //X void set_date(int date); // date = the date of tomorrow. Those people with medium risk or withdraw may released.
     void record_in(Person_Node *reg_node); // transfer the data from local registry to center
-    Person_Node *record_out(); // pop a "minimum" node
+    void record_in_reg(Person_Node *reg_node);
+    void record_in_app(Person_Node *reg_node);
+    void record_in_cure(Person_Node *reg_node);
+    void record_out(); // pop a "minimum" node
+    Person_Node *record_out_reg();
+    Person_Node *record_out_app();
+    Person_Node *record_out_cure();
     //X void change_profession(Person_Node *reg_node);
     void withdraw_heap(Person_Node *reg_node);
     //X int waiting_number(); // return the number of people waiting in the heaps
@@ -36,7 +42,7 @@ private:
     //X int date; // tomorrow's date
     void transfer_in(Person_Node *reg_node, FibNode<T> *fib_node); // transfer the data from reg_node to fib_node
     void transfer_out(Person_Node *reg_node, FibNode<T> *fib_node); // transfer the data from fib_node to reg_node
-    void search_node(Person_Node *reg_node, FibHeap<T> **heap, FibNode<T> **fib_node); // search a node
+    FibNode<T> *search_node(Person_Node *reg_node, FibHeap<T> **heap, FibNode<T> **fib_node); // search a node
     
     //X void build_array(Person_Node *a, FibNode<T> *root, int n);
    //  void build_vecotr(vector<Person_Node> *a, FibNode<T> *root, int n);
