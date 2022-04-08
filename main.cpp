@@ -24,7 +24,9 @@ int main(){
         
         while(date==day[numitems]){
         
+
         if(Local->search_id(ID[numitems]) != nullptr))
+
         {
             Local->search_id(ID[numitems])->update(Local->search_id(ID[numitems]),date);
         }
@@ -62,11 +64,11 @@ int main(){
         int operation;
         int operation2;
         
-        cout<<"Do you want to withdraw? 1 for yes and others for no"
+        cout<<"Do you want to withdraw? 1 for yes and others for no";
         cin>>operation;
         while(operation == 1){//serch_id 有问题
            
-            cout<<"Please enter the id"
+            cout<<"Please enter the id";
             cin>>operation2;
             FibNode<T> *anyone;
             Person_Node *anybody=Local->search_id(operation2);
