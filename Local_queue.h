@@ -18,8 +18,8 @@ private:
     queue<Person_Node>* p; // input queue, it will receive all the input node abtained in the file
     queue<Person_Node>* total;  //total queue contain all the node until this date
     queue<Person_Node>* e;  //output queue, contain the people that are at the ddl
-    int FIFO();
 public:
+    Local_queue();
     void deal(int date); //process and record the status, date, and time for all the patients in queue.
     void search_id(int id);
     Person_Node *sameid;  //used for search the same id, in case someone has registered for two times
@@ -36,3 +36,4 @@ public:
     queue<Person_Node>* get_e();
     queue<Person_Node>* get_total();
 };
+
