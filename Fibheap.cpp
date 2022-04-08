@@ -293,3 +293,5 @@ template <class T> void FibHeap<T>::remove(FibNode<T> *node) {
     decrease(node, m-1);
     removeMin();
 }
+
+
