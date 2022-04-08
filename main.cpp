@@ -33,7 +33,7 @@ int main(){
         while(date==day[numitems]){
         
 
-        if(Local->search_id(ID[numitems]) != nullptr)
+        if(Local->search_id(ID[numitems]) != NULL)
 
         {
             Local->search_id(ID[numitems])->update(Local->search_id(ID[numitems]),date);
@@ -91,7 +91,7 @@ int main(){
             anybody->regday=-1;
 
             anyone=Central->search_node(anybody); 
-            if(anyone==nullptr){
+            if(anyone==NULL){
                 cout<<"Do you still want to withdraw some people? 1 for yes and others for no"<<endl;
                 cin>>operation;
                 continue;
@@ -110,7 +110,7 @@ int main(){
         report_weekly_monthly(date,Local,Central);
         date++;
 
-	    
+	   
 
     }
 }
