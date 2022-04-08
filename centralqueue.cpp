@@ -1,5 +1,4 @@
-#include "FibHeap.cpp"
-#include "node.cpp"
+#include "node.h"
 #include "Fibheap.h"
 
 
@@ -87,10 +86,10 @@ template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
 // pop a minimum node. (no) it will return a pointer to the node.
 // (no) if there is no node, it will return a NULL pointer
 
-template <class T> void CentralQueue<T>::record_out() {
+template <class T> void CentralQueue<T>::record_out(int date) {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
-    fib_node->appdate=date;
+    fib_node->appday=date;
     fib_node->cureday=date+1; 
    
    
@@ -201,17 +200,3 @@ template <class T> FibNode<T>* CentralQueue<T>::search_node(Person_Node *reg_nod
 
 
 //no need
-template <class T> void CentralQueue<T>::withdraw_heap(Person_Node *reg_node) {
-    FibNode<T> *fib_node = nullptr;
-    FibHeap<T> *heap = nullptr;
-    // search the node in the heap
-    search_node(reg_node, &heap, &fib_node);
-    if (fib_node == nullptr) {return;}
-    
-    // change the status to withdraw, and remove the node
-    fib_node->stat = withdraw;
-    heap->remove(fib_node);
-    return;
-}
-
-

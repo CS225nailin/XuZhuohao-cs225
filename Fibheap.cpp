@@ -1,4 +1,4 @@
-#include "FibHeap.h"
+#include "Fibheap.h"
 
 //---------------------------------------------------------------------------------
 // Following are the functions of FibHeap
@@ -35,8 +35,8 @@ template <class T> void FibHeap<T>::insert(FibNode<T> *node) {
     if (node == nullptr)
         return ;
     
-    if (keyNum == 0)
-        min = node;
+    //if (keyNum == 0)
+    //   min = node;
     else
        {
         addNode(node, min);
@@ -293,5 +293,4 @@ template <class T> void FibHeap<T>::remove(FibNode<T> *node) {
     decrease(node, m-1);
     removeMin();
 }
-
 

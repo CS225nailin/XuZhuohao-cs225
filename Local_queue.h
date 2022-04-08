@@ -1,6 +1,8 @@
 //
 // Created by Kejun Wu on 2022/4/8.
 //
+#ifndef  _Local_queue_h_
+#define  _Local_queue_h_
 
 #include <iostream>
 #include <queue>
@@ -36,3 +38,4 @@ public:
     queue<Person_Node>* get_e();
     queue<Person_Node>* get_total();
 };
+#endif

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-#include "node.cpp"
+#include "node.h"
 
 
 using namespace std;
@@ -28,12 +28,12 @@ public:
     void record_in_reg(Person_Node *reg_node);
     void record_in_app(Person_Node *reg_node);
     void record_in_cure(Person_Node *reg_node);
-    void record_out(); // pop a "minimum" node
+    void record_out(int date); // pop a "minimum" node
     Person_Node *record_out_reg();
     Person_Node *record_out_app();
     Person_Node *record_out_cure();
     //X void change_profession(Person_Node *reg_node);
-    void withdraw_heap(Person_Node *reg_node);
+  
     //X int waiting_number(); // return the number of people waiting in the heaps
     
     //X void sort(Person_Node *a);
@@ -81,8 +81,8 @@ public:
         child  = nullptr;
     }
     
-	int cureday; // 治疗的日子 预约的日子+1
-int appday; // 最晚排上预约的日子
+	int cureday; // 娌荤枟鐨勬棩瀛?棰勭害鐨勬棩瀛?1
+int appday; // 鏈€鏅氭帓涓婇绾︾殑鏃ュ瓙
 private:
 //information to calculate the priority
 string p;
@@ -91,10 +91,10 @@ int ID;
 int profession;
 int risk; //  0 1 2 3 no low midium high
 int age;
-int regday; // 来登记的日子
+int regday; // 鏉ョ櫥璁扮殑鏃ュ瓙
 //other information
-int person_state;// 排队预约治疗 0 1 2 3 
-bool withdraw; // 退出+14
+int person_state;// 鎺掗槦棰勭害娌荤枟 0 1 2 3 
+bool withdraw; // 閫€鍑?14
 string place;
 //all kinds of priorities 
 int priority;
