@@ -80,7 +80,7 @@ Person_Node *Local_queue::search_id(int id){     //iterate the total queue datab
         Person_Node *A;
         A = &(this->total->front());     //get the node in the head of the queue
         if(this->total->front().ID == id){
-            return A;     //update the sameid person_node*
+            return A;     
         }
         this->total->pop();           //pop the head node
         this->total->push(*A);        //push it to the back of the queue
