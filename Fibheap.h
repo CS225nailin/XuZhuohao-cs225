@@ -21,6 +21,7 @@ template <class T> class CentralQueue {
      // friend void test(); // !!
 public:
     CentralQueue();
+    
     // these are the functions needed in other files
     //X void set_date(int date); // date = the date of tomorrow. Those people with medium risk or withdraw may released.
     void record_in(Person_Node *reg_node); // transfer the data from local registry to center

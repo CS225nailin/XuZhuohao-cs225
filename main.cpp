@@ -18,15 +18,17 @@ int main(){
     string name[3]={"czx","dasd","ds"};
     string pro[3]={"teacher","police","soider"};
     string where[3]={"A","C","B"};
-    int numitems=0,date=1;
+    int numitems =0,date =1;
     while(date<=30){
         cout<<'----------today is day'<<date<<'---------'<<endl;
         
         while(date==day[numitems]){
         
-        if//（相同ID）
+
+        if(Local->search_id(ID[numitems]) != nullptr))
+
         {
-            //update
+            Local->search_id(ID[numitems])->update(Local->search_id(ID[numitems]),date);
         }
         else
         {
@@ -62,11 +64,11 @@ int main(){
         int operation;
         int operation2;
         
-        cout<<"Do you want to withdraw? 1 for yes and others for no"
+        cout<<"Do you want to withdraw? 1 for yes and others for no";
         cin>>operation;
         while(operation == 1){//serch_id 有问题
            
-            cout<<"Please enter the id"
+            cout<<"Please enter the id";
             cin>>operation2;
             FibNode<T> *anyone;
             Person_Node *anybody=Local->search_id(operation2);
