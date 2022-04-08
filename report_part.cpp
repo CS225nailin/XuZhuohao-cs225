@@ -1,3 +1,6 @@
+#include "node.h"
+#include "Local_queue.h"
+#include "Fibheap.h"
 void report_weekly_monthly(int day)
 {
     if (day%7 == 0)
@@ -35,38 +38,74 @@ void report_weekly_monthly(int day)
 
         void print_original()
         {
-            cout<<"The list that people have been treated"<<endl;
-            while ("这个节点的next不是null的时候")
+            Person_Node *cured;
+            int counter;
+            cout<<"The list that peopcole have been treated"<<endl;
+            for(i = 0; i < total->size(); i++)
             {
-                if("他的状态是以被治疗")
+                int cured_day = total->front()->regday;
+                cured = total->front();
+                total->push(total->front);
+                total->pop();
+                if(day - 7 <= cured_day <= day)
                 {
-                    cout<<"这个节点的职业，年龄，风险以及从注册到治疗之间花的时间"<<endl;
+                    record_in_cure(cured);
+                    counter++;
                 }
-
             }
-
+            for(i = 0; i < counter; i++)
+            {
+                cured = record_out_cure();
+                cout<<cured->proffesion<<"  "<<cured->age<<"  "<<cured->risk<<"  "<<day - cured->regday<<endl;
+            }
+        }
+            Person_Node *registed;
+            counter = 0;
             cout<<"The list that people have registered"<<endl;
-            while ("这个节点的next不是null的时候")
+            for(i = 0; i < total->size(); i++)
             {
-                if("他的状态是已注册的")
+                int registed_day = total->front()->regday;
+                cured = total->front();
+                total->push(total->front);
+                total->pop();
+                if(day - 7 <= registed_day <= day)
                 {
-                    cout<<"这个节点的职业，年龄，风险以及从注册至今共多少时间"<<endl;
-                }   
-            }
-
-            cout<<"The list that people is queueing"<<endl;
-            while ("这个节点的next不是null的时候")
-            {
-                if("他的状态是排队中的")
-                {
-                    cout<<"这个节点的职业，年龄，风险以及排队排了多久了"<<endl;
+                    record_in_reg(registed);
+                    counter++;
                 }
+            }
+            for(i = 0; i < counter; i++)
+            {
+                registed = record_out_reg();
+                cout<<registed->proffesion<<"  "<<registed->age<<"  "<<registed->risk<<"  "<<day - registed->regday<<endl;
+            }
+        }
+            counter = 0;
+            Person_Node* appointed;
+            cout<<"The list that people is queueing"<<endl;
+            for(i = 0; i < total->size(); i++)
+            {
+                int appointed_day = total->front()->appday;
+                cured = total->front();
+                total->push(total->front());
+                total->pop();
+                if(day - 7 <= appointed_day <= day)
+                {
+                    record_in_reg(appointed);
+                    counter++;
+                }
+            }
+            for(i = 0; i < counter; i++)
+            {
+                registed = record_out_app();
+                cout<<appointed->proffesion<<"  "<<appointed->age<<"  "<<appointed->risk<<"  "<<day - appointed->regday<<endl;
             }
         }
 
         void print_proffession_sorted()
         {
-
+cout<<"暂不支持";}
+/*
             //用斐波那契堆排序
 
             cout<<"The list that people have been treated"<<endl;
@@ -98,10 +137,11 @@ void report_weekly_monthly(int day)
             
             
         }
-
+*/
         void print_age_sorted()
         {
-
+cout<<"暂不支持"}
+/*
             //用斐波那契堆排序
 
             cout<<"The list that people have been treated"<<endl;
@@ -132,9 +172,11 @@ void report_weekly_monthly(int day)
             }
 
         }
-
+*/
         void print_name_sorted()
         {
+            cout<<"暂不支持";}
+            /*
 
             //用姓名排序
             
@@ -166,3 +208,13 @@ void report_weekly_monthly(int day)
             }
             
         }
+
+
+int cureday; // 治疗的日子 预约的日子+1
+int appday; // 最晚排上预约的日子
+int regday; // 来登记的日子
+// day >= cureday 得到结论 cured
+// day == appday 得到结论 已注册
+//  REGDAY <=DAY < APPDAY => 排队说
+
+*/
