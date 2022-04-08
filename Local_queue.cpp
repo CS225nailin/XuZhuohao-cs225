@@ -86,4 +86,5 @@ Person_Node *Local_queue::search_id(int id){     //iterate the total queue datab
         this->total->pop();           //pop the head node
         this->total->push(*A);        //push it to the back of the queue
     }
+    return 0;
 }
