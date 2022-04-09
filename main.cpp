@@ -237,7 +237,7 @@ int main(){
     CentralQueue<int>* Central = new CentralQueue<int>;
     Local_queue* Local = new Local_queue;
     
-    int day[12]={1,1,1,1,2,2,2,2,3,3,3,3};
+    int day[12]={1,1,1,1,1,2,2,2,3,3,3,3};
     int ID[12]={320011,320012,320013,320014,1,2,3,4,5,6,7,8};
     int age[12]={18,19,50,20,18,19,50,20,18,19,50,20};
     int risk[12]={0,1,1,1,0,1,1,1,0,1,1,1};
