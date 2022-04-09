@@ -106,7 +106,7 @@ template <class T> class FibHeap {
     template <class X> friend class CentralQueue; // note the X here
     // friend void test(); // !!
 public:
-    FibHeap();
+    FibHeap(int keynum);
     ~FibHeap();
 
     void insert(FibNode<T> *node); // insert a node into the root list
