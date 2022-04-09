@@ -61,6 +61,9 @@ class LinkedList
     LinkedList* This_day(int date)
     {  LinkedList* temp=new LinkedList();
       Node* temp_ptr = this->head;
+      if(head==NULL){
+        
+      }
       if (head->data->regday == date)
       {
         temp->insert(head->data);

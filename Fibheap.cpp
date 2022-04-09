@@ -140,7 +140,7 @@ template <class T> void FibHeap<T>::consolidate() {
 }
 
 // remove the min node
-template <class T> FibNode<T> *FibHeap<T>::removeMin() {
+template <class T> FibNode<T>* FibHeap<T>::removeMin() {
     if (min==NULL)
         return NULL;
 

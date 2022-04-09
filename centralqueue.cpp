@@ -89,6 +89,10 @@ template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
 template <class T> void CentralQueue<T>::record_out(int date) {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
+    if(fib_node==NULL){
+        cout<<"Sorry, there is no one in FBH.";
+        return;
+    }
     fib_node->appday=date;
     fib_node->cureday=date+1; 
    
@@ -151,6 +155,10 @@ template <class T> Person_Node *CentralQueue<T>::record_out_reg() {
 template <class T>Person_Node  *CentralQueue<T>::record_out_app() {
     FibNode<T> *fib_node = nullptr;
     fib_node = app_heap->removeMin();
+    if(fib_node==NULL){
+        cout<<"Sorry, there is no one in FBH.";
+        return NULL;
+    }
     Person_Node *person=fib_node->origin_node;
     
     if (fib_node != nullptr) {delete fib_node;} 

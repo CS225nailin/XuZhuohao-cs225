@@ -2,22 +2,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-
+#include "Local_queue.cpp"
 #include "Fibheap.cpp"
 #include "node.cpp"
 #include "centralqueue.cpp"
-#include "LinkedList.cpp"
-
-
 using std::string;
 using std::cout;
 using namespace std;
-void print_original(LinkedList* Local, int day,  CentralQueue<int>* Central);
+void print_original(Local_queue* Local, int day,  CentralQueue<int>* Central);
 void print_proffession_sorted();
 void print_age_sorted();
 void print_name_sorted();
 
-void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Central)
+void report_weekly_monthly(int day, Local_queue* Local, CentralQueue<int>* Central)
 {
     if (day%7 == 0)
     {
@@ -47,8 +44,8 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             print_name_sorted();
             break;
         default: cout<<"Wrong input! Please restart the program and choose what you want again!";
+            break;
         }
-        return;
     }
     else
     {
@@ -56,74 +53,69 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
     }
 }
     int i;
-    void print_original(LinkedList* Local, int day,  CentralQueue<int>* Central)
+    void print_original(Local_queue* Local, int day,  CentralQueue<int>* Central)
         {
+            Person_Node *cured;
+            int counter;
             cout<<"The list that peopcole have been treated"<<endl;
-            
-            
-            int counter = 0;
-            Node* temp = Local->head;
-            Person_Node* temp_out;
-            for(i = 0; i < Local->numb; i++)
+            for(i = 0; i < (Local->get_total())->size(); i++)
             {
-                int cured_day = temp->data->cureday;
-            
-                if(day - 7 <= cured_day&&cured_day <= day)
+                int cured_day = (Local->get_total())->front().cureday;
+                cured = &((Local->get_total())->front());
+                (Local->get_total())->push((Local->get_total())->front());
+                (Local->get_total())->pop();
+                if(day - 7 <= cured_day <= day)
                 {
-                    Central->record_in_cure(temp->data);
+                    Central->record_in_cure(cured);
                     counter++;
                 }
-            temp = temp->next;
-            }
-            
-            for(i = 0; i < counter; i++)
-            {
-                temp_out = Central->record_out_cure();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<<temp_out->cureday<<endl;
-            }
-
-
-
-            counter = 0;
-            cout<<"The list that people have registered"<<endl;            
-            for(i = 0; i < Local->numb; i++)
-            {
-                temp = Local->head;
-                int registed_day = temp->data->regday;
-
-                if(day - 7 <= registed_day&&registed_day <= day)
-                {
-                    Central->record_in_reg(temp->data);
-                    counter++;
-                }
-                temp= temp->next;
             }
             for(i = 0; i < counter; i++)
             {
-                temp_out = Central->record_out_reg();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<<day - temp_out->regday<<endl;
+                cured = Central->record_out_cure();
+                cout<<cured->profession<<"  "<<cured->age<<"  "<<cured->risk<<"  "<<day - cured->regday<<endl;
+            }
+            Person_Node *registed;
+            counter = 0;
+            cout<<"The list that people have registered"<<endl;
+            for(i = 0; i < (Local->get_total())->size(); i++)
+            {
+                int registed_day = (Local->get_total())->front().regday;
+                registed = &((Local->get_total())->front());
+                (Local->get_total())->push((Local->get_total())->front());
+                (Local->get_total())->pop();
+                if(day - 7 <= registed_day <= day)
+                {
+                    Central->record_in_reg(registed);
+                    counter++;
+                }
+            }
+            for(i = 0; i < counter; i++)
+            {
+                registed = Central->record_out_reg();
+                cout<<registed->profession<<"  "<<registed->age<<"  "<<registed->risk<<"  "<<day - registed->regday<<endl;
             }
 
             counter = 0;
+            Person_Node* appointed;
             cout<<"The list that people is queueing"<<endl;
-            for(i = 0; i < Local->numb; i++)
+            for(i = 0; i < (Local->get_total())->size(); i++)
             {
-                temp = Local->head;
-                int appointed_day = temp->data->appday;
-
-                if(day - 7 <= appointed_day&&appointed_day <= day)
+                int appointed_day = (Local->get_total())->front().appday;
+                appointed = &(Local->get_total()->front());
+                (Local->get_total())->push((Local->get_total())->front());
+                (Local->get_total())->pop();
+                if(day - 7 <= appointed_day <= day)
                 {
-                    Central->record_in_reg(temp->data);
+                    Central->record_in_reg(appointed);
                     counter++;
                 }
-                temp = temp->next;
             }
             for(i = 0; i < counter; i++)
             {
-                temp_out = Central->record_out_app();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<<day - temp_out->regday<<endl;
+                registed = Central->record_out_app();
+                cout<<appointed->profession<<"  "<<appointed->age<<"  "<<appointed->risk<<"  "<<day - appointed->regday<<endl;
             }
-            return;
         }
 
         void print_proffession_sorted()
@@ -243,81 +235,60 @@ int regday; // 来登记的日子
 */
 int main(){
     CentralQueue<int>* Central = new CentralQueue<int>;
-    LinkedList* Local = new LinkedList;
+    Local_queue* Local = new Local_queue;
     
-    int day[90]={1,1,1,1,1,1,1,1,1,1,1,1,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,27,28,28,28,29,29,29,30,30,30};
-    int ID[90]={1,2,3,4,5,6,7,8,9,10,11,12,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,27,28,28,28,29,29,29,30,30,30};
-    int age[90]={1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,27,28,28,28,29,29,29,30,30,30};
-    int risk[90]={0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1};
-    int waitmax[90]={1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,13,13,13,14,14,14,15,15,15,16,16,16,17,17,17,18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,27,28,28,28,29,29,29,30,30,30};
-    string name[90]={"czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa"};
-    string pro[90]={"teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider"};
-    string where[90]={"A","C","B","C","A","C","B","C","A","C","B","C","C","A","C","B","C","A","C","B","C","A","C","B","C","C","A","C","B","C","A","C","B","C","A","C","B","C","C","A","C","B","C","A","C","B","C","A","C","B","C","C","A","C","B","C","A","C","B","C","A","C","B","C","C","A","C","B","C","A","C","B","C","A","C","B","C","C"};
+    int day[12]={1,1,1,1,1,2,2,2,3,3,3,3};
+    int ID[12]={320011,320012,320013,320014,1,2,3,4,5,6,7,8};
+    int age[12]={18,19,50,20,18,19,50,20,18,19,50,20};
+    int risk[12]={0,1,1,1,0,1,1,1,0,1,1,1};
+    int waitmax[12]={3,6,9,4,3,6,9,4,3,6,9,4};
+    string name[12]={"czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa"};
+    string pro[12]={"teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider"};
+    string where[12]={"A","C","B","C","A","C","B","C","A","C","B","C"};
     int numitems =0,date =1;
-    Person_Node* test;
     while(date<=30){
         cout<<"----------today is day"<<date<<"---------"<<endl;
-        for(int numitems=0;numitems<90;numitems++){
-        	cout<<"numitems =="<<numitems<<endl;
-	
-      
-        if(day[numitems]==date){
-           	     Person_Node *sss=Local->search(ID[numitems]);
+        while(day[numitems]==date){
+            cout<<Local->get_total()->size()<<endl;
+            Person_Node *sss=Local->search_id(ID[numitems]);
             
-	        if( sss!= NULL)
-	        {
-	            sss->update(sss,date);
-	            cout<<"update"<<endl;
-	            
-	        }
-	        else  
-	        {   
-	           	Person_Node *pat=new Person_Node(day[numitems],ID[numitems],age[numitems],risk[numitems],waitmax[numitems],name[numitems],pro[numitems],where[numitems]);
-	           
-	            Local->insert(pat);//把person_node 加入local_p
-	          Local->size_report();
-              Local->display();
-	           
-	            
-			}
-            
-            
-           
+        if( sss!= NULL)
+        {cout<<"up2"<<endl;
+            sss->update(sss,date);
+            cout<<"update"<<endl;
         }
-        
-        
+        else
+        {    cout<<"input2"<<endl;
+            Person_Node *pat=new Person_Node(day[numitems],ID[numitems],age[numitems],risk[numitems],waitmax[numitems],name[numitems],pro[numitems],where[numitems]);
+            cout<<"input1"<<endl;
+            Local->get_p()->push(*pat);//把person_node 加入local_p
+            cout<<"input"<<endl;
+        }
+        numitems++;
+        cout<<numitems<<endl;
                    
-     }
-        LinkedList* today_people=Local->This_day(date);
-        today_people->size_report();
-        today_people->display();
-        cout<<"get somebody3"<<endl;
-
-        Node* somebody = today_people->head;
-        cout<<"get somebody"<<endl;
-        
-        while(somebody != NULL){
-        	cout<<"get somebody2"<<endl;
+        }
+        Local->deal(date);
+        cout<<"deal"<<endl;
+        for(int i=0;i<Local->get_q()->size();i++){
             
-           Central->record_in(somebody->data);
-           cout<<"record_in"<<endl;
-           somebody = somebody -> next;
-            cout<<"getnext"<<endl;
+            Person_Node* somebody=&(Local->get_q()->front());
+            
+            Local->get_q()->pop();
+            
+           Central->record_in(somebody);
+            
             
         }
-        cout<<"get somebody4"<<endl;
         
         int counter=0;
-        int max=3;// 记得改成80
-
-        LinkedList* ddl_people=Local->DDL_day(date);
-        Node* someone=ddl_people->head;
+        int max=1;// 记得改成80
         
-        for(int i=0;i<ddl_people->numb;i++){//e有问题
-            
-            Central->fib_heap-> decrease(Central->search_node(someone->data),-100);
+        for(int i=0;i<Local->get_e()->size();i++){//e有问题
+            Person_Node* someone=&(Local->get_e()->front());
+            Local->get_e()->pop();
+            Central->fib_heap-> decrease(Central->search_node(someone),-100);
             Central->record_out(date);
-            someone = someone -> next;
             counter++;
            
         }
@@ -338,7 +309,7 @@ int main(){
             cout<<"Please enter the id";
             cin>>operation2;
             FibNode<int> *anyone;
-            Person_Node *anybody=Local->search(operation2);
+            Person_Node *anybody=Local->search_id(operation2);
             if(anybody == NULL){
                 cout<<"You enter an id that does not exist"<<endl;
                 cout<<"Do you still want to withdraw some people? 1 for yes and others for no"<<endl;
