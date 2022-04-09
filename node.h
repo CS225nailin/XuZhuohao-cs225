@@ -17,8 +17,8 @@ int get_regday();
 int get_hospital();
 int lastday;
 int stateupdate(); // 更新state
-int cureday=1001; // 治疗的日子 预约的日子+1
-int appday=1000; // 最晚排上预约的日子
+int cureday=10001; // 治疗的日子 预约的日子+1
+int appday=10000; // 最晚排上预约的日子
 int regday;
 void update(Person_Node *patient,int day);
 

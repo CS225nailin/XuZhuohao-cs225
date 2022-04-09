@@ -305,6 +305,7 @@ int main(){
             cout<<"getnext"<<endl;
             
         }
+        cout<<"get somebody4"<<endl;
         
         int counter=0;
         int max=3;// 记得改成80
