@@ -7,10 +7,10 @@
 // fib_heap is for normal people, priority_heap is for those with priority letters,
 // waiting_heap is for medium-risk people and withdraw, high_risk_heap is for high-risk people
 template <class T> CentralQueue<T>::CentralQueue() {
-    FibHeap<T>* fib_heap = new FibHeap<T>;
-    FibHeap<T>* reg_heap = new FibHeap<T>;
-    FibHeap<T>* app_heap = new FibHeap<T>;
-    FibHeap<T>* cure_heap = new FibHeap<T>;
+    fib_heap = new FibHeap<T>(0);
+    reg_heap = new FibHeap<T>(0);
+    app_heap = new FibHeap<T>(0);
+    cure_heap = new FibHeap<T>(0);
     
    
     return;
