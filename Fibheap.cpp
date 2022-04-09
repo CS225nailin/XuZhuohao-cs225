@@ -3,9 +3,9 @@
 //---------------------------------------------------------------------------------
 // Following are the functions of FibHeap
 // constructor
-template <class T> FibHeap<T>::FibHeap() {
-    keyNum = 0;
-    maxDegree = 0;
+template <class T> FibHeap<T>::FibHeap(int keynum) {
+    keyNum = keynum;
+    maxDegree = keynum;
     min = NULL;
     cons = NULL;
 }
