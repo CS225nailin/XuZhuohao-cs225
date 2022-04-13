@@ -48,6 +48,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         cout<<"The number of the appointment people had made this month is "<<total_number_appointment<<endl;
         cout<<"The average waiting time is "<<total_waiting_time/total_number_appointment<<endl;
         cout<<"The number of people who withdrew their registration is "<<withdraw<<endl;
+        cout<<endl<<endl<<endl<<endl;
     }
     if (day%7 == 0)
     {
@@ -60,6 +61,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         cout<<"2 : sort by profession category"<<endl;
         cout<<"3 : sort by age group"<<endl;
         cout<<"4 : sort by name"<<endl;
+        cout<<"-------------------"<<"weekly report"<<"-------------------"<<endl;
 
         cin>>sort_selection;
         switch (sort_selection)
