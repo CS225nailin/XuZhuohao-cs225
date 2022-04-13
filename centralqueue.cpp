@@ -34,6 +34,7 @@ template <class T> void CentralQueue<T>::transfer_in(Person_Node *reg_node, FibN
 	fib_node->person_state=reg_node->person_state;
 	fib_node->withdraw=reg_node->withdraw;
 	fib_node->place=reg_node->place;
+    fib_node->waitingday=reg_node->waitingday;
 
 	fib_node->priority=reg_node->priority;
 	fib_node->age_priority=reg_node->age_priority;
@@ -58,6 +59,7 @@ template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {
 	reg_node->person_state=fib_node->person_state;
 	reg_node->withdraw=fib_node->withdraw;
 	reg_node->place=fib_node->place;
+    reg_node->waitingday=fib_node->waitingday;
 
 	reg_node->priority=fib_node->priority;
 	reg_node->age_priority=fib_node->age_priority;
@@ -95,6 +97,7 @@ template <class T> void CentralQueue<T>::record_out(int date) {
     }
     fib_node->appday=date;
     fib_node->cureday=date+1; 
+    fib_node->waitingday=fib_node->appday-fib_node->regday;
    
    
     

@@ -92,6 +92,7 @@ int profession;
 int risk; //  0 1 2 3 no low midium high
 int age;
 int regday; // 鏉ョ櫥璁扮殑鏃ュ瓙
+int waitingday;
 //other information
 int person_state;// 鎺掗槦棰勭害娌荤枟 0 1 2 3 
 bool withdraw; // 閫€鍑?14

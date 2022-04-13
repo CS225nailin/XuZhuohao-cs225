@@ -12,13 +12,43 @@
 using std::string;
 using std::cout;
 using namespace std;
-void print_original(LinkedList* Local, int day,  CentralQueue<int>* Central);
+void print_original();
 void print_proffession_sorted();
-void print_age_sorted();
+void print_age_sorted(LinkedList* Local, int day,  CentralQueue<int>* Central);
 void print_name_sorted();
 
-void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Central)
+void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Central, int withdraw)
 {
+    if (day%28 == 0)
+    {
+        int total_number = 0,total_number_waiting = 0;
+         int total_number_appointment=0;
+         int total_waiting_time=0;
+        Node* temp_pointer = Local->head;
+        while(temp_pointer != NULL)
+        {
+            total_number++;
+            if(temp_pointer->data->appday==10000&&temp_pointer->data->withdraw==0){
+                total_number_waiting++;
+            }
+            if(temp_pointer->data->appday!=10000){
+                total_number_appointment++;
+                total_waiting_time+=temp_pointer->data->waitingday;
+            }
+            temp_pointer = temp_pointer->next;
+            
+        }
+
+
+        
+
+        cout<<"----------In this month----------"<<endl;
+        cout<<"The number people registered this month is "<<total_number<<endl;
+        cout<<"The number people are waiting in total is "<<total_number_waiting<<endl;
+        cout<<"The number of the appointment people had made this month is "<<total_number_appointment<<endl;
+        cout<<"The average waiting time is "<<total_waiting_time/total_number_appointment<<endl;
+        cout<<"The number of people who withdrew their registration is "<<withdraw<<endl;
+    }
     if (day%7 == 0)
     {
         int sort_selection;
@@ -35,13 +65,13 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         switch (sort_selection)
         {
         case 1:
-            print_original(Local,day,Central);
+            print_original();
             break;
         case 2:
             print_proffession_sorted();
             break;
         case 3:
-            print_age_sorted();
+            print_age_sorted(Local,day,Central);
             break;
         case 4:
             print_name_sorted();
@@ -54,11 +84,15 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
     {
         return;
     }
+
+
 }
+    
     int i;
-    void print_original(LinkedList* Local, int day,  CentralQueue<int>* Central)
+    void print_age_sorted(LinkedList* Local, int day,  CentralQueue<int>* Central)
         {
-            cout<<"The list that peopcole have been treated"<<endl;
+            cout<<"The list that peopcole have been treated"<<endl<<endl;
+            cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;
             
             
             int counter = 0;
@@ -79,13 +113,14 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             for(i = 0; i < counter; i++)
             {
                 temp_out = Central->record_out_cure();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<<temp_out->cureday<<endl;
+                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<" "<<temp_out->waitingday+1<<endl;
             }
 
 
 
             counter = 0;
-            cout<<"The list that people have registered"<<endl;            
+            cout<<"The list that people have queueing"<<endl<<endl;
+            cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;     
             for(i = 0; i < Local->numb; i++)
             {
                 temp = Local->head;
@@ -105,7 +140,8 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             }
 
             counter = 0;
-            cout<<"The list that people is queueing"<<endl;
+            cout<<"The list that people is registered with a appointentment"<<endl<<endl;
+            cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;
             for(i = 0; i < Local->numb; i++)
             {
                 temp = Local->head;
@@ -122,10 +158,9 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             {
                 temp_out = Central->record_out_app();
                 if(temp_out==NULL){
-                    cout<<"ji"<<endl;
                     return;
                 }
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<<day - temp_out->regday<<endl;
+                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<< temp_out->waitingday<<endl;
             }
             return;
         }
@@ -166,7 +201,7 @@ cout<<"暂不支持";}
             
         }
 */
-        void print_age_sorted()
+        void print_original()
         {
 cout<<"暂不支持";}
 /*
@@ -246,6 +281,7 @@ int regday; // 来登记的日子
 //  REGDAY <=DAY < APPDAY => 排队说
 */
 int main(){
+    int withdraw_counter = 0;
     CentralQueue<int>* Central = new CentralQueue<int>;
     LinkedList* Local = new LinkedList;
     
@@ -338,7 +374,7 @@ int main(){
         cout<<"Do you want to withdraw? 1 for yes and others for no"<<endl;
         cin>>operation;
         while(operation == 1){
-           
+           withdraw_counter++;
             cout<<"Please enter the id";
             cin>>operation2;
             FibNode<int> *anyone;
@@ -370,7 +406,7 @@ int main(){
         //if 1 ,enter id
         //check if this id in central , if so , withdraw ,else print "not found"
 
-        report_weekly_monthly(date,Local,Central);
+        report_weekly_monthly(date,Local,Central,withdraw_counter);
         date++;
     }
     return 0;
