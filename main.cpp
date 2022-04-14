@@ -343,6 +343,7 @@ int main(){
         
         getline(sin, field, ','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
         ID[number_data]=atoi(field.c_str());
+       //cout<<atoi(field.c_str())<<endl;
 
         
         getline(sin, field, ','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
@@ -354,14 +355,17 @@ int main(){
         getline(sin, field, ','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
         waitmax[number_data]=atoi(field.c_str());
 
-        getline(sin, field); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
+        getline(sin, field,','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
         name[number_data]=field.c_str() ;
+        // cout<<field.c_str()<<endl;
 
-        getline(sin, field); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
+        getline(sin, field,','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
         pro[number_data]=field.c_str(); 
+        // cout<<field.c_str()<<endl;
 
-        getline(sin, field); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
+        getline(sin, field,','); //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符 
         where[number_data]=field.c_str(); 
+         //cout<<field.c_str()<<endl;
 
         
         number_data++;
