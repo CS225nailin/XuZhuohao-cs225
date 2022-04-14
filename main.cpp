@@ -29,6 +29,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         int total_number = 0,total_number_waiting = 0;
          int total_number_appointment=0;
          int total_waiting_time=0;
+         float averagewaiting;
         Node* temp_pointer = Local->head;
         while(temp_pointer != NULL)
         {
@@ -43,6 +44,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             temp_pointer = temp_pointer->next;
             
         }
+        averagewaiting=float(total_waiting_time)/float(total_number_appointment);
 
 
         
@@ -51,7 +53,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         cout<<"The number people registered this month is "<<total_number<<endl;
         cout<<"The number people are waiting in total is "<<total_number_waiting<<endl;
         cout<<"The number of the appointment people had made this month is "<<total_number_appointment<<endl;
-        cout<<"The average waiting time is "<<total_waiting_time/total_number_appointment<<endl;
+        cout<<"The average waiting time is "<<averagewaiting<<endl;
         cout<<"The number of people who withdrew their registration is "<<withdraw<<endl;
         cout<<endl<<endl<<endl<<endl;
     }
@@ -120,20 +122,23 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             for(i = 0; i < counter; i++)
             {
                 temp_out = Central->record_out_cure();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<" "<<temp_out->waitingday+1<<endl;
+                if(temp_out!=NULL){
+                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<" "<<temp_out->waitingday<<endl;
+                }
             }
 
 
-
+            temp = Local->head;
             counter = 0;
             cout<<"The list that people have queueing"<<endl<<endl;
             cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;     
             for(i = 0; i < Local->numb; i++)
             {
-                temp = Local->head;
+                
                 int registed_day = temp->data->regday;
+                int app_day=temp->data->appday;
 
-                if(day - 7 <= registed_day&&registed_day <= day)
+                if(day - 7 <= registed_day&& registed_day <= day && day<app_day)
                 {
                     Central->record_in_reg(temp->data);
                     counter++;
@@ -143,31 +148,36 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             for(i = 0; i < counter; i++)
             {
                 temp_out = Central->record_out_reg();
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<<day - temp_out->regday<<endl;
+                 if(temp_out!=NULL){
+                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<< day-temp_out->regday<<endl;
+                 }
             }
-
+            temp = Local->head;
             counter = 0;
             cout<<"The list that people is registered with a appointentment"<<endl<<endl;
             cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;
             for(i = 0; i < Local->numb; i++)
             {
-                temp = Local->head;
+                
                 int appointed_day = temp->data->appday;
 
-                if(day - 7 <= appointed_day&&appointed_day <= day)
+                if(appointed_day == day)
                 {
-                    Central->record_in_reg(temp->data);
+                    Central->record_in_app(temp->data);
                     counter++;
+
                 }
+
                 temp = temp->next;
             }
+            cout<<counter<<"is counter"<<endl;
             for(i = 0; i < counter; i++)
             {
                 temp_out = Central->record_out_app();
-                if(temp_out==NULL){
-                    return;
+                if(temp_out!=NULL){
+                    cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<< temp_out->waitingday-1<<endl;
                 }
-                cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->risk<<"  "<< temp_out->waitingday<<endl;
+              
             }
             return;
         }
@@ -290,6 +300,7 @@ int regday; // 来登记的日子
 
 
 int main(){
+    //initiallize
     int withdraw_counter = 0;
     CentralQueue<int>* Central = new CentralQueue<int>;
     LinkedList* Local = new LinkedList;
@@ -304,6 +315,8 @@ int main(){
     string name[1000];//={"czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","czx","dasd","ds","dsa","dsa","dsa","dsa"};
     string pro[1000];//]={"teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","teacher","police","soider","soider","soider","soider","soider"};
     string where[1000];//=
+
+    //following part is used to read the csv file
 
 
     ifstream inFile("data.csv", ios::in);
@@ -382,7 +395,7 @@ int main(){
         cout<<"----------today is day"<<date<<"---------"<<endl;
       
         	
-	
+	//bulid new node for new patient or update the information for old patient
       
         while(day[numitems]==date){
            	     Person_Node *sss=Local->search(ID[numitems]);
@@ -408,7 +421,7 @@ int main(){
            
         }
         
-        
+        //following part is used to put today's patient in the fib_heap
                    
      
         LinkedList* today_people=Local->This_day(date);
@@ -431,12 +444,14 @@ int main(){
         
         
         int counter=0;
-        int max=3;// 记得改成80
+        int max=19;
+
+        //folowing part is used to check whether get a patient's dll(waiting_max_Day) 
 
         LinkedList* ddl_people=Local->DDL_day(date);
         Node* someone=ddl_people->head;
         
-        for(int i=0;i<ddl_people->numb;i++){//e有问题
+        for(int i=0;i<ddl_people->numb;i++){
             
             Central->fib_heap-> decrease(Central->search_node(someone->data),-100);
             Central->record_out(date);
@@ -445,15 +460,21 @@ int main(){
            
         }
         //find must be apptoday;
+
+        //following part is used to pop the smallest element in the fibheap
         
         for(int i=0;i<max-counter;i++){
             
             Central->record_out(date);
             
         }
+
+
+         //following part is used to withdraw
         int operation;
         int operation2;
         
+
         cout<<"Do you want to withdraw? 1 for yes and others for no"<<endl;
         cin>>operation;
         while(operation == 1){
@@ -488,6 +509,9 @@ int main(){
         //if 0 go on
         //if 1 ,enter id
         //check if this id in central , if so , withdraw ,else print "not found"
+
+
+        //following part is used to report
 
         report_weekly_monthly(date,Local,Central,withdraw_counter);
         date++;

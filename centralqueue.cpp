@@ -92,12 +92,12 @@ template <class T> void CentralQueue<T>::record_out(int date) {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
     if(fib_node==NULL){
-        cout<<"Sorry, there is no one in FBH.";
         return;
     }
     fib_node->appday=date;
     fib_node->cureday=date+1; 
     fib_node->waitingday=fib_node->appday-fib_node->regday;
+    fib_node->waitingday++;
    
    
     
@@ -119,7 +119,7 @@ template <class T> void CentralQueue<T>::record_in_reg(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age; // the key in the fib_heap is priority
     reg_heap->insert(fib_node);
    
 }
@@ -130,7 +130,7 @@ template <class T> void CentralQueue<T>::record_in_app(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age; // the key in the fib_heap is priority
     app_heap->insert(fib_node);
    
 }
@@ -141,13 +141,17 @@ template <class T> void CentralQueue<T>::record_in_cure(Person_Node *reg_node) {
     transfer_in(reg_node, fib_node);
     
    
-    fib_node->key = fib_node->age_priority; // the key in the fib_heap is priority
+    fib_node->key = fib_node->age; // the key in the fib_heap is priority
     cure_heap->insert(fib_node);
    
 }
 template <class T> Person_Node *CentralQueue<T>::record_out_reg() {
     FibNode<T> *fib_node = nullptr;
     fib_node = reg_heap->removeMin();  
+       if(fib_node==NULL){
+       
+        return NULL;
+    }
     Person_Node *person=fib_node->origin_node;
     
     if (fib_node != nullptr) {delete fib_node;} 
@@ -159,7 +163,7 @@ template <class T>Person_Node  *CentralQueue<T>::record_out_app() {
     FibNode<T> *fib_node = nullptr;
     fib_node = app_heap->removeMin();
     if(fib_node==NULL){
-        cout<<"Sorry, there is no one in FBH.";
+       
         return NULL;
     }
     Person_Node *person=fib_node->origin_node;
@@ -173,6 +177,10 @@ template <class T>Person_Node  *CentralQueue<T>::record_out_app() {
 template <class T> Person_Node *CentralQueue<T>::record_out_cure() {
     FibNode<T> *fib_node = nullptr;
     fib_node = cure_heap->removeMin();
+     if(fib_node==NULL){
+        
+        return NULL;
+    }
  
     
    
