@@ -1,21 +1,24 @@
+//This LinkedList.cpp will contain the implementation of the local queue. We will realize this queue by linked lists.
+//Firstly, this program will be input the patients as nodes that registing today
+//Then, this program will transfer two types of people, the people registing today, and the people that are at ddl today, respectively to Fibnacci heap
+//This program will also store all the patients (nodes) in a database, it will be used for the weekly and monthly report
+
 #include <iostream>
 using namespace std;
 #include "node.h"
 
-// Making a node struct containing a data int and a pointer
-// to another node
+// Making a node struct containing a data int and a pointer to another node
 struct Node { 
     Person_Node* data; 
     Node *next; 
 };
 
+//The class for this linkedlist
 class LinkedList
 {
     public:
-    // Head pointer
-    Node* head;
+    Node* head;  // Head pointer
     int numb;
-
 
     // default constructor. Initializing head pointer
     LinkedList()
@@ -35,21 +38,20 @@ class LinkedList
       // If list is empty, make the new node, the head
       if (head == NULL)
         head = new_node;
-      // else, make the new_node the head and its next, the previous
-      // head
+      // else, make the new_node the head and its next, the previous head
       else
       {
         new_node->next = head;
         head = new_node;
       }
-      numb++;
+      numb++;  //increment the number of the nodes
     }
 
     // loop over the list. return true if element found
     Person_Node* search(int id)
     {
       Node* temp = head;
-      while(temp != NULL)
+      while(temp != NULL)   //loop over the list
       {
         if (temp->data->ID == id)
           return temp->data;
@@ -58,6 +60,8 @@ class LinkedList
       return NULL;
     }
 
+//This function input the date of today, and after classification, it will return a linkedlist which contains the patients that register today
+//and they will be transfer to the Fibnacci heap
     LinkedList* This_day(int date)
     {  LinkedList* temp=new LinkedList();
       Node* temp_ptr = this->head;
@@ -81,6 +85,8 @@ class LinkedList
       return temp;
     }
 
+//This function also input the date of today, and after classification, it will return the linkedlist which contains 
+//all the paitents that are at their ddl and must be treated now.
     LinkedList* DDL_day(int date)
     {LinkedList* temp=new LinkedList();
      
@@ -145,6 +151,8 @@ class LinkedList
       cout << "Value not found" << endl;
     }
 */
+
+//This function will display all the patients IDs and it will be used for debugging
     void display()
     {
       Node* temp = head;
@@ -162,6 +170,7 @@ class LinkedList
       return;
     }
 
+//report the size of the patients in the queue
     void size_report()
     {
       cout<<"Now there are "<<numb<<"elements in the queue"<<endl;
