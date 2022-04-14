@@ -66,6 +66,7 @@ class LinkedList
     {  LinkedList* temp=new LinkedList();
       Node* temp_ptr = this->head;
       if(head==NULL){
+      	return NULL;
         
       }
       if (head->data->regday == date)
