@@ -1,0 +1,22 @@
+This is our CS225 group C6 computing assignment 1
+
+In this programming assignment, we implement a registration, queueing and reporting system for mass medical treatments. 
+
+For the registration, we will get a person's ID, name, profession, age, risk status, contact detail(address, phone, wechat, email)
+The patients can write them into an input file and then we will read the file to create a person node for each patient
+
+For the queueing, we will process according to the specific priority.
+
+We will build a local queue, which is realized by linked lists, to transfer the patients registing today or at ddl to Fibonacci heap.
+We will also store all the person node to a database to protect all information
+
+For the central queue, which is a fibonacci heap, we will generate 4 heaps.
+fib_heap is for normal people, priority_heap is for those with priority letters,
+waiting_heap is for medium-risk people and withdraw, high_risk_heap is for high-risk people
+We will pop the patients according to their prioirty to let them get treated
+
+For the report, the system will produce weekly report and monthly report.
+The reported people are arranged by their age.
+We will report the list that peopcole have been treated, the list that people have queueing, and The list that people is registered with a appointentment
+
+The whole system will end at day 30. 
