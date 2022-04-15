@@ -85,8 +85,7 @@ template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
    
 }
 
-// pop a minimum node. (no) it will return a pointer to the node.
-// (no) if there is no node, it will return a NULL pointer
+// pop a minimum node. in fibheap
 
 template <class T> void CentralQueue<T>::record_out(int date) {
     FibNode<T> *fib_node = nullptr;
@@ -110,8 +109,8 @@ template <class T> void CentralQueue<T>::record_out(int date) {
     if (fib_node != nullptr) {delete fib_node;} 
    
 }
+// the following 6 function just repeat the recrodin and recrod out in reg_heap ,cure_heap and app_heap;
 
-// search the node with key and ID . return a pointer to the node; if not find, return NULL
 template <class T> void CentralQueue<T>::record_in_reg(Person_Node *reg_node) {
     if (reg_node == nullptr) {return;}
     
@@ -194,6 +193,7 @@ template <class T> Person_Node *CentralQueue<T>::record_out_cure() {
 }
 
 
+// search the node with key and ID . return a pointer to the node; if not find, return NULL
 template <class T> FibNode<T>* CentralQueue<T>::search_node(Person_Node *reg_node) {
     FibNode<T> *root_node;
     FibNode<T> *fib_node;
@@ -218,4 +218,3 @@ template <class T> FibNode<T>* CentralQueue<T>::search_node(Person_Node *reg_nod
 //no need
 
 
-//no need

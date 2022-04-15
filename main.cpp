@@ -22,15 +22,20 @@ void print_proffession_sorted();
 void print_age_sorted(LinkedList* Local, int day,  CentralQueue<int>* Central);
 void print_name_sorted();
 
+//this function is used to weekly and monthly report;
+
 void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Central, int withdraw)
 {
     if (day%30 == 0)
     {
-        int total_number = 0,total_number_waiting = 0;
+        int total_number = 0;
+        int total_number_waiting = 0;
          int total_number_appointment=0;
          int total_waiting_time=0;
          float averagewaiting;
         Node* temp_pointer = Local->head;
+
+        //get all the information we need for the report_monthly
         while(temp_pointer != NULL)
         {
             total_number++;
@@ -69,7 +74,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
         cout<<"3 : sort by age group"<<endl;
         cout<<"4 : sort by name"<<endl;
         cout<<"-------------------"<<"weekly report"<<"-------------------"<<endl;
-
+        //actually we just have the function of case 3 ( sort by age)
         cin>>sort_selection;
         switch (sort_selection)
         {
@@ -107,6 +112,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
             int counter = 0;
             Node* temp = Local->head;
             Person_Node* temp_out;
+            //show the cured people
             for(i = 0; i < Local->numb; i++)
             {
                 int cured_day = temp->data->cureday;
@@ -127,7 +133,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
                 }
             }
 
-
+            //show the waiting people
             temp = Local->head;
             counter = 0;
             cout<<"The list that people have queueing"<<endl<<endl;
@@ -152,6 +158,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
                 cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<< day-temp_out->regday<<endl;
                  }
             }
+            //show the people who have set a appointment
             temp = Local->head;
             counter = 0;
             cout<<"The list that people is registered with a appointentment"<<endl<<endl;
@@ -397,10 +404,10 @@ int main(){
         	
 	//bulid new node for new patient or update the information for old patient
       
-        while(day[numitems]==date){
+        while(day[numitems]==date){//check if it is old patient
            	     Person_Node *sss=Local->search(ID[numitems]);
             
-	        if( sss!= NULL)
+	        if( sss!= NULL)//if it is old patient ,update the information
 	        {
 	            sss->update(sss,date);
 	          
@@ -411,8 +418,7 @@ int main(){
 	           	Person_Node *pat=new Person_Node(day[numitems],ID[numitems],age[numitems],risk[numitems],waitmax[numitems],name[numitems],pro[numitems],where[numitems]);
 	           
 	            Local->insert(pat);//把person_node 加入local_p
-	        //   Local->size_report();
-            //   Local->display();
+	      
 	           
 	            
 			}
@@ -444,7 +450,7 @@ int main(){
         
         
         int counter=0;
-        int max=19;
+        int max=19;//this is the max number central queue can pop every day
 
         //folowing part is used to check whether get a patient's dll(waiting_max_Day) 
 
@@ -459,7 +465,7 @@ int main(){
             counter++;
            
         }
-        //find must be apptoday;
+        //find must be app today;
 
         //following part is used to pop the smallest element in the fibheap
         
