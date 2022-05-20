@@ -28,7 +28,7 @@ public:
     void record_in_reg(Person_Node *reg_node);
     void record_in_app(Person_Node *reg_node);
     void record_in_cure(Person_Node *reg_node);
-    void record_out(int date); // pop a "minimum" node
+    Person_Node* record_out(int date); // pop a "minimum" node
     Person_Node *record_out_reg();
     Person_Node *record_out_app();
     Person_Node *record_out_cure();
@@ -42,7 +42,7 @@ public:
 //private:
     //X int date; // tomorrow's date
     void transfer_in(Person_Node *reg_node, FibNode<T> *fib_node); // transfer the data from reg_node to fib_node
-    void transfer_out( FibNode<T> *fib_node); // transfer the data from fib_node to reg_node
+    Person_Node* transfer_out( FibNode<T> *fib_node); // transfer the data from fib_node to reg_node
     FibNode<T>* search_node(Person_Node *reg_node); // search a node
     
     //X void build_array(Person_Node *a, FibNode<T> *root, int n);

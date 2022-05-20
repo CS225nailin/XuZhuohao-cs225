@@ -10,6 +10,11 @@
 #include "node.cpp"
 #include "centralqueue.cpp"
 #include "LinkedList.cpp"
+#include "Btree.cpp"
+#include "B+_node.cpp"
+#include "B+tree.cpp"
+
+
 
 
 
@@ -305,6 +310,8 @@ int main(){
     int withdraw_counter = 0;
     CentralQueue<int>* Central = new CentralQueue<int>;
     LinkedList* Local = new LinkedList;
+    CBPlusTree<int,Person_Node*>* Blackpink= new CBPlusTree<int,Person_Node*>;
+    BTree* Btree = new BTree;
     
    
     
@@ -455,7 +462,13 @@ int main(){
         for(int i=0;i<ddl_people->numb;i++){
             
             Central->fib_heap-> decrease(Central->search_node(someone->data),-100);
-            Central->record_out(date);
+            Person_Node* Rikka;
+            Rikka=Central->record_out(date);
+            if(Rikka!=NULL)
+            {Blackpink->insert(Rikka->ID,Rikka);
+
+            Btree->_insert(Rikka);}
+
             someone = someone -> next;
             counter++;
            
@@ -466,8 +479,12 @@ int main(){
         
         for(int i=0;i<max-counter;i++){
             
-            Central->record_out(date);
-            
+            Person_Node* Rikka;
+            Rikka=Central->record_out(date);
+            if(Rikka!=NULL)
+            {Blackpink->insert(Rikka->ID,Rikka);
+
+            Btree->_insert(Rikka);}
         }
 
 

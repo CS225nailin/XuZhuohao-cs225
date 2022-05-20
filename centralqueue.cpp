@@ -44,7 +44,7 @@ template <class T> void CentralQueue<T>::transfer_in(Person_Node *reg_node, FibN
 }
 
 // transfer the data from fib_node to reg_node
-template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {
+template <class T> Person_Node* CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {
    
     Person_Node *reg_node=fib_node->origin_node;//shengming yige fib_node(person node)
     reg_node->appday=fib_node->appday;
@@ -63,6 +63,7 @@ template <class T> void CentralQueue<T>::transfer_out(FibNode<T> *fib_node) {
 
 	reg_node->priority=fib_node->priority;
 	reg_node->age_priority=fib_node->age_priority;
+    return reg_node;
    
    	 
 	
@@ -87,11 +88,11 @@ template <class T> void CentralQueue<T>::record_in(Person_Node *reg_node) {
 
 // pop a minimum node. in fibheap
 
-template <class T> void CentralQueue<T>::record_out(int date) {
+template <class T> Person_Node* CentralQueue<T>::record_out(int date) {
     FibNode<T> *fib_node = nullptr;
     fib_node = fib_heap->removeMin();
     if(fib_node==NULL){
-        return;
+        return NULL;
     }
     fib_node->appday=date;
     fib_node->cureday=date+1; 
@@ -102,11 +103,13 @@ template <class T> void CentralQueue<T>::record_out(int date) {
     
     
  
-    transfer_out(fib_node);
+    Person_Node* reg_node;
+    reg_node=transfer_out(fib_node);
     
     
      
     if (fib_node != nullptr) {delete fib_node;} 
+    return reg_node;
    
 }
 // the following 6 function just repeat the recrodin and recrod out in reg_heap ,cure_heap and app_heap;
