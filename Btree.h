@@ -1,50 +1,63 @@
-#ifndef BTREE_H
-#define BTREE_H
-
-#include "node.h"
+#include <iostream>
 using namespace std;
 
-static const int m = 3;  
-static const int key_max = 2*m-1;
-static const int key_min = m - 1;
-static const int child_max = key_max + 1;
-static const int child_min = key_min + 1;
-
-class BTnode
-{
-    friend class BTree;
-public:
-	  BTnode(void);
-private:
-    bool isleaf;  //Determine whether it is a leaf node
-    int keyNum;   //Number of keywords in a node
-    BTnode* parent;   //point to the parent node
-    BTnode* pchild[child_max];   //subtree pointer array
-    Person_Node* keyvalue[key_max];    //key array
-};
-
-class BTree
+template <typename T>
+class B_Tree_Node
 {
 public:
-    Person_Node* temp_array[10000];
-    int temp_size = 0;
-    BTree();
-    bool _insert(Person_Node* value);  //return 1 if success, 0 if failed
-    void SplitBlock(BTnode* node_parent,int child_index,BTnode* node_child);
-    void Notfull_insert(BTnode* node,Person_Node* value);
-    bool contain(Person_Node* value); //determine if the tree contain this node
+    bool is_leaf;
+    int size;
+    int depth;
 
-    void _printpoint(BTnode* node,int count);
-    void printpoint(void);
-
-    bool _delete(Person_Node* value);
-    BTnode* _find(BTnode* node,Person_Node* value);
-    void MergeBlock(BTnode* node_parent,int child_index);
-    Person_Node* getprev(BTnode* node);
-    Person_Node* getnext(BTnode* node);
-    void BTree_deletebalance(BTnode* node,Person_Node* value);
-    void Inorder(BTnode* root);
-private:
-	BTnode* root;
+    T *keys;
+    B_Tree_Node<T> **children;
 };
-#endif
+
+template <typename T>
+class B_Tree
+{
+public:
+    B_Tree(int x = 3);
+    ~B_Tree();
+
+    bool contain(T key) const;
+    T *getHandle(T key) const;
+    void display();
+    bool insert(T key);
+    bool remove(T key);
+    T* rep;
+    void Inorder(B_Tree_Node<T> *root);
+    B_Tree_Node<T> *root;
+    int num = 0;
+
+private:
+    void printNodeInfo(B_Tree_Node<T> *p_node) const;
+    B_Tree_Node<T> *createEmptyNode();
+    void freeNode(B_Tree_Node<T> *p_node);
+    int findFirstNotSmaller(B_Tree_Node<T> *p_node, T a_key) const;
+    T *search(B_Tree_Node<T> *p_node, T key_to_search) const;
+    void freeAll(B_Tree_Node<T> *p_node);
+    void display(B_Tree_Node<T> *p_node);
+    void updateDepth(B_Tree_Node<T> *p_node);
+    T getPred(B_Tree_Node<T> *p_node, int index) const;
+    T getSucc(B_Tree_Node<T> *p_node, int index) const;
+    bool insertToNode(B_Tree_Node<T> *p_node, T new_key);
+    void splitChild(B_Tree_Node<T> *parent, int full_child_index);
+    void mergeChildren(B_Tree_Node<T> *parent, int merge_index);
+    bool removeFromLeaf(B_Tree_Node<T> *p_node, int remove_index);
+    bool insertNonFull_recursively(B_Tree_Node<T> *p_node, T insert_key);
+    // when the corresponding child has less than min_degree keys, try to fill the child with more key.
+    void fillChild(B_Tree_Node<T> *parent, int fill_child_index);
+    bool removeFromNonLeaf(B_Tree_Node<T> *&p_node, int remove_index);
+    bool remove(B_Tree_Node<T> *&p_node, T remove_key);
+    void borrowFromLeft(B_Tree_Node<T>* parent, int borrow_child_index);
+    void borrowFromRight(B_Tree_Node<T>* parent, int borrow_child_index);
+
+
+
+
+private:
+    int min_degree;
+    int key_num;
+
+};

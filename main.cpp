@@ -10,7 +10,7 @@
 #include "node.cpp"
 #include "centralqueue.cpp"
 #include "LinkedList.cpp"
-#include "Btree_LZH.cpp"
+#include "Btree.cpp"
 #include "B+_node.cpp"
 #include "B+tree.cpp"
 
@@ -311,7 +311,7 @@ int main(){
     CentralQueue<int>* Central = new CentralQueue<int>;
     LinkedList* Local = new LinkedList;
     CBPlusTree<int,Person_Node*>* Blackpink= new CBPlusTree<int,Person_Node*>;
-    B_Tree<int>* Btree = new B_Tree<int>;
+    B_Tree<uint32_t>* Btree = new B_Tree<uint32_t>;
     
    
     
@@ -467,7 +467,7 @@ int main(){
             if(Rikka!=NULL)
             {Blackpink->insert(Rikka->ID,Rikka);
 
-            Btree->insert(Rikka->age);}
+            Btree->insert(((Rikka->age)<<25) + Rikka->ID);}
 
             someone = someone -> next;
             counter++;
@@ -484,7 +484,7 @@ int main(){
             if(Rikka!=NULL)
             {Blackpink->insert(Rikka->ID,Rikka);
 
-            Btree->insert(Rikka->age);}
+            Btree->insert(((Rikka->age)<<25) + Rikka->ID);}
         }
 
 
@@ -530,14 +530,17 @@ int main(){
 
 
         //following part is used to report
-        cout<<"num123"<<endl;
         report_weekly_monthly(date,Local,Central,withdraw_counter);
-        date++;
-        Person_Node** BP_tree = Blackpink->report();
+        date++;    
         int num123=Blackpink->getnum();
-
-        Btree->Inorder(Btree->root);
-        write_file_based_on_2_keys(BP_tree, num123, Btree->rep);
+        /*cout<<num123<<endl;*/
+        Person_Node** BP_tree = Blackpink->report();
+       /* Btree->Inorder(Btree->root);*/
+       //Btree->Inorder(Btree->root);
+       Btree->display();
+       Btree->num = 0;
+       //cout<<Btree->rep[0];
+       write_file_based_on_2_keys(BP_tree, num123, Btree->rep);
     }
     return 0;
 }

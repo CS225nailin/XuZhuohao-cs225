@@ -28,10 +28,10 @@ void update(Person_Node *patient,int day);
 //information to calculate the priority
 int hospital;
 string name;
-int ID;
+uint32_t ID;
 int profession;
 int risk; //  0 1 2 3 no low midium high
-int age;
+uint32_t age;
 
 //other information
 int person_state;// 排队预约治疗 0 1 2 3 

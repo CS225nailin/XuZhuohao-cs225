@@ -10,6 +10,7 @@ CBPlusTree<KeyType, DataType>::CBPlusTree()
 	m_Root = NULL;
 	m_DataHead = NULL;
 	rep=new DataType[10000];
+	num = 0;
 
 }
 
@@ -224,10 +225,10 @@ DataType* CBPlusTree<KeyType, DataType>::report()
 	int n = -1;
 	while (itr != NULL)
 	{
-		n+=1;
 		for (int i = 0; i < itr->getKeyNum(); ++i)
-		{
-			rep[num]= itr->getData(i);
+		{	
+			n+=1;
+			rep[n]= itr->getData(i);
 		}
 		itr = itr->getRightSibling();
 	}

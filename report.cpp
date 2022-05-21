@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void write_file_based_on_2_keys(Person_Node** BP_tree, int BP_num, Person_Node** B_tree)
+void write_file_based_on_2_keys(Person_Node** BP_tree, int BP_num, uint32_t* B_tree)
 {
     ofstream outfile;
     outfile.open("Output_File.csv");
@@ -12,10 +12,12 @@ void write_file_based_on_2_keys(Person_Node** BP_tree, int BP_num, Person_Node**
         outfile<<",";
         outfile<<BP_tree[i]->age;
         outfile<<",,";
-        outfile<<B_tree[i]->ID;
+        uint32_t temp_1 = B_tree[i];
+        uint32_t temp_2 = B_tree[i];
+        outfile<<(temp_1 << 7 >> 7);
         outfile<<",";
-        outfile<<B_tree[i]->age;
-        outfile<<"/n";
+        outfile<<(temp_2 >> 25);
+        outfile<<endl;
     }
    outfile.close();
 }
