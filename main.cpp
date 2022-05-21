@@ -10,11 +10,11 @@
 #include "node.cpp"
 #include "centralqueue.cpp"
 #include "LinkedList.cpp"
-#include "Btree.cpp"
+#include "Btree_LZH.cpp"
 #include "B+_node.cpp"
 #include "B+tree.cpp"
 
-
+#include "report.cpp"
 
 
 
@@ -311,7 +311,7 @@ int main(){
     CentralQueue<int>* Central = new CentralQueue<int>;
     LinkedList* Local = new LinkedList;
     CBPlusTree<int,Person_Node*>* Blackpink= new CBPlusTree<int,Person_Node*>;
-    BTree* Btree = new BTree;
+    B_Tree<int>* Btree = new B_Tree<int>;
     
    
     
@@ -467,7 +467,7 @@ int main(){
             if(Rikka!=NULL)
             {Blackpink->insert(Rikka->ID,Rikka);
 
-            Btree->_insert(Rikka);}
+            Btree->insert(Rikka->age);}
 
             someone = someone -> next;
             counter++;
@@ -484,7 +484,7 @@ int main(){
             if(Rikka!=NULL)
             {Blackpink->insert(Rikka->ID,Rikka);
 
-            Btree->_insert(Rikka);}
+            Btree->insert(Rikka->age);}
         }
 
 
@@ -530,9 +530,14 @@ int main(){
 
 
         //following part is used to report
-
+        cout<<"num123"<<endl;
         report_weekly_monthly(date,Local,Central,withdraw_counter);
         date++;
+        Person_Node** BP_tree = Blackpink->report();
+        int num123=Blackpink->getnum();
+
+        Btree->Inorder(Btree->root);
+        write_file_based_on_2_keys(BP_tree, num123, Btree->rep);
     }
     return 0;
 }

@@ -50,14 +50,14 @@ public:
 
 	// 清空
 	void clear();
-	DataType *report() const;
+	DataType *report();
 	// 打印所有key（树的形式）
 	void print() const;
 
 	// 打印所有data
 	void printData() const;
-	int getnum() const;
-
+	int getnum();
+	int num;
 private:
 	void recursive_insert(CNode<KeyType, DataType> *parentNode, KeyType key, const DataType data);
 	void recursive_remove(CNode<KeyType, DataType> *parentNode, KeyType key);
@@ -69,7 +69,7 @@ private:
 	void search(KeyType key, SelectResult<KeyType, DataType> &result);
 	void remove(KeyType key, DataType &dataValue);
 	void recursive_remove(CNode<KeyType, DataType> *parentNode, KeyType key, DataType &dataValue);
-	int num;
+
 private:
 	CNode<KeyType, DataType> *m_Root;
 	CLeafNode<KeyType, DataType> *m_DataHead;

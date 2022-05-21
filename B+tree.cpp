@@ -212,12 +212,12 @@ void CBPlusTree<KeyType, DataType>::printInConcavo(CNode<KeyType, DataType> *pNo
 	}
 }
 template <typename KeyType, typename DataType>
-int CBPlusTree<KeyType, DataType>::getnum() const
+int CBPlusTree<KeyType, DataType>::getnum() 
 {
 	return num;	
 }
 template <typename KeyType, typename DataType>
-DataType* CBPlusTree<KeyType, DataType>::report() const
+DataType* CBPlusTree<KeyType, DataType>::report() 
 {
 	CLeafNode<KeyType, DataType> *itr = m_DataHead;
 	itr->pour();
