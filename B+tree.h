@@ -27,34 +27,34 @@ template <typename KT, typename DT>
 class CBPlusTree
 {
 public:
-	// 构造函数 & 析构函数
+	
 	CBPlusTree();
 	~CBPlusTree();
 
-	// 接口
+	
 	bool insert(KT key, const DT data);
 	bool remove(KT key);
 	bool update(KT oldKey, KT newKey);
 
-	// 定值查询，compareOperator可以是LT(<)、LE(<=)、EQ(=)、BE(>=)、BT(>)
+
 	vector<DT> oneSideSelect(KT compareKey, int compareOpeartor) const;
 
-	// 范围查询，BETWEEN
+	
 	vector<DT> twoSideSelect(KT smallKey, KT largeKey) const;
 
-	// 查找是否存在
+
 	bool search(KT key) const;
 
-	// 获取key对应data的指针
+
 	DT *getDataHandle(KT key) const;
 
-	// 清空
+	
 	void clear();
 	DT *report();
-	// 打印所有key（树的形式）
+
 	void print() const;
 
-	// 打印所有data
+
 	void printData() const;
 	int getnum();
 	int num;
