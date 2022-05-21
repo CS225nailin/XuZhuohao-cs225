@@ -10,6 +10,7 @@ public:
     int depth;
 
     T *keys;
+    Person_Node
     B_Tree_Node<T> **children;
 };
 
@@ -25,7 +26,7 @@ public:
     void display() const;
     bool insert(T key);
     bool remove(T key);
-    Person_Node** rep;
+    B_Tree_Node<T>** rep;
     void Inorder(B_Tree_Node<T> *root);
     B_Tree_Node<T> *root;
 
