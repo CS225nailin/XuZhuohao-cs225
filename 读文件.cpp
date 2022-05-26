@@ -4,7 +4,8 @@
 #include <sstream>
 #include <string>
 using namespace std;
-//哈咯哈咯听得到吗
+//deque是啥
+
 void main()
 {
    
