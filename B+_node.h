@@ -18,8 +18,7 @@ const int MINNUM_CHILD = MINNUM_KEY + 1;
 const int MAXNUM_CHILD = MAXNUM_KEY + 1; 	
 const int MINNUM_LEAF = MINNUM_KEY;		 	
 const int MAXNUM_LEAF = MAXNUM_KEY;		 	
-
-// 结点基类
+//This is the base class node, used to be inherited
 template <typename KT, typename DT>
 class CNode
 {
@@ -73,7 +72,7 @@ private:
 	CNode<KT, DT> *m_Childs[MAXNUM_CHILD];
 };
 
-// 叶子结点
+
 template <typename KT, typename DT>
 class CLeafNode : public CNode<KT, DT>
 {
