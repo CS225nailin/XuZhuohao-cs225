@@ -9,7 +9,12 @@ CBPlusTree<KT, DT>::CBPlusTree()
 {
 	m_Root = NULL;
 	m_DataHead = NULL;
+<<<<<<< HEAD
+	rep=new DataType[10000];
+	num = 0;
+=======
 	rep=new DT[10000];
+>>>>>>> f6c7b2acae6db10d88aed77a03f11c1be1bc7019
 
 }
 
@@ -216,9 +221,14 @@ DT* CBPlusTree<KT, DT>::report()
 	int n = -1;
 	while (itr != NULL)
 	{
+<<<<<<< HEAD
+		for (int i = 0; i < itr->getKeyNum(); ++i)
+		{	
+=======
 		
 		for (int i = 0; i < itr->getKeyNum(); ++i)
 		{
+>>>>>>> f6c7b2acae6db10d88aed77a03f11c1be1bc7019
 			n+=1;
 			rep[n]= itr->getData(i);
 		}
