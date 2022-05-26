@@ -2,105 +2,90 @@
 #include "B+_node.h"
 #include <iostream>
 using namespace std;
-// CNode
-template <typename KeyType, typename DataType>
-CNode<KeyType, DataType>::CNode()
+
+template <typename KT, typename DT>
+CNode<KT, DT>::CNode()
 {
 	setType(LEAF);
 	setKeyNum(0);
 }
 
-template <typename KeyType, typename DataType>
-CNode<KeyType, DataType>::~CNode()
+template <typename KT, typename DT>
+CNode<KT, DT>::~CNode()
 {
 	setKeyNum(0);
 }
 
-template <typename KeyType, typename DataType>
-NODE_TYPE CNode<KeyType, DataType>::getType() const { return m_Type; }
+template <typename KT, typename DT>
+NODE_TYPE CNode<KT, DT>::getType() const { return m_Type; }
 
-template <typename KeyType, typename DataType>
-void CNode<KeyType, DataType>::setType(NODE_TYPE type) { this->m_Type = type; }
+template <typename KT, typename DT>
+void CNode<KT, DT>::setType(NODE_TYPE type) { this->m_Type = type; }
 
-template <typename KeyType, typename DataType>
-int CNode<KeyType, DataType>::getKeyNum() const
+template <typename KT, typename DT>
+int CNode<KT, DT>::getKeyNum() const
 {
 	return m_KeyNum;
 }
 
-template <typename KeyType, typename DataType>
-void CNode<KeyType, DataType>::setKeyNum(int n)
+template <typename KT, typename DT>
+void CNode<KT, DT>::setKeyNum(int n)
 {
 	m_KeyNum = n;
 }
 
-template <typename KeyType, typename DataType>
-KeyType CNode<KeyType, DataType>::getKeyValue(int i) const
+template <typename KT, typename DT>
+KT CNode<KT, DT>::getKeyValue(int i) const
 {
 	return m_KeyValues[i];
 }
 
-template <typename KeyType, typename DataType>
-void CNode<KeyType, DataType>::setKeyValue(int i, KeyType key)
+template <typename KT, typename DT>
+void CNode<KT, DT>::setKeyValue(int i, KT key)
 {
 	m_KeyValues[i] = key;
 }
 
-template <typename KeyType, typename DataType>
-int CNode<KeyType, DataType>::getKeyIndex(KeyType key) const
+template <typename KT, typename DT>
+int CNode<KT, DT>::getKeyIndex(KT key) const
 {
-	// cout << "Now get index of " << key << endl;
+	
 	if (getKeyNum() == 0)
 		return 0;
-	// int left = 0;
-	// int right = getKeyNum() - 1;
-	// int current;
-	// while (left != right)
-	// {
-	// 	current = (left + right) / 2;
-	// 	KeyType currentKey = getKeyValue(current);
-	// 	if (key > currentKey)
-	// 	{
-	// 		left = current + 1;
-	// 	}
-	// 	else
-	// 	{
-	// 		right = current;
-	// 	}
-	// }
+	
 	int ret = this->getKeyNum() - 1;
 	for (int i=0;i<this->getKeyNum();i++)
 	{
 		if (this->m_KeyValues[i] >= key)
 		{
 			ret = i;
-			// cout << "index found: " << ret << endl;
+			/
 			break;
 		}
 	}
 	return ret;
 }
 
-// CInternalNode
-template <typename KeyType, typename DataType>
-CInternalNode<KeyType, DataType>::CInternalNode()
+
+template <typename KT, typename DT>
+CInternalNode<KT, DT>::CInternalNode()
 {
 	this->setType(INTERNAL);
 }
 
-template <typename KeyType, typename DataType>
-CInternalNode<KeyType, DataType>::~CInternalNode()
+template <typename KT, typename DT>
+CInternalNode<KT, DT>::~CInternalNode()
 {
 }
 
-template <typename KeyType, typename DataType>
-CNode<KeyType, DataType> *CInternalNode<KeyType, DataType>::getChild(int i) const { return m_Childs[i]; }
+template <typename KT, typename DT>
+CNode<KT, DT> *CInternalNode<KT, DT>::getChild(int i) const { return m_Childs[i]; }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::setChild(int i, CNode<KeyType, DataType> *child) { m_Childs[i] = child; }
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::setChild(int i, CNode<KT, DT> *child) { m_Childs[i] = child; }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::clear()
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::clear()
 {
 	for (int i = 0; i <= this->m_KeyNum; ++i)
 	{
@@ -113,29 +98,29 @@ void CInternalNode<KeyType, DataType>::clear()
 	}
 }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::split(CNode<KeyType, DataType> *parentNode, int childIndex)
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::split(CNode<KT, DT> *parentNode, int childIndex)
 {
-	CInternalNode<KeyType, DataType> *newNode = new CInternalNode<KeyType, DataType>; //分裂后的右节点
+	CInternalNode<KT, DT> *newNode = new CInternalNode<KT, DT>; 
 	newNode->setKeyNum(MINNUM_KEY);
 	int i;
-	for (i = 0; i < MINNUM_KEY; ++i) // 拷贝关键字的值
+	for (i = 0; i < MINNUM_KEY; ++i) // COPY THE value of key
 	{
 		newNode->setKeyValue(i, this->m_KeyValues[i + MINNUM_CHILD]);
 	}
-	for (i = 0; i < MINNUM_CHILD; ++i) // 拷贝孩子节点指针
+	for (i = 0; i < MINNUM_CHILD; ++i) // Copy the child node pointer
 	{
 		newNode->setChild(i, m_Childs[i + MINNUM_CHILD]);
 	}
-	this->setKeyNum(MINNUM_KEY); //更新左子树的关键字个数
-	((CInternalNode<KeyType, DataType> *)parentNode)->insert(childIndex, childIndex + 1, this->m_KeyValues[MINNUM_KEY], newNode);
+	this->setKeyNum(MINNUM_KEY); 
+	((CInternalNode<KT, DT> *)parentNode)->insert(childIndex, childIndex + 1, this->m_KeyValues[MINNUM_KEY], newNode);
 }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::insert(int keyIndex, int childIndex, KeyType key, CNode<KeyType, DataType> *childNode)
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::insert(int keyIndex, int childIndex, KT key, CNode<KT, DT> *childNode)
 {
 	int i;
-	for (i = this->getKeyNum(); i > keyIndex; --i) //将父节点中的childIndex后的所有关键字的值和子树指针向后移一位
+	for (i = this->getKeyNum(); i > keyIndex; --i) 
 	{
 		setChild(i + 1, m_Childs[i]);
 		this->setKeyValue(i, this->m_KeyValues[i - 1]);
@@ -149,23 +134,23 @@ void CInternalNode<KeyType, DataType>::insert(int keyIndex, int childIndex, KeyT
 	this->setKeyNum(this->m_KeyNum + 1);
 }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::mergeChild(CNode<KeyType, DataType> *parentNode, CNode<KeyType, DataType> *childNode, int keyIndex)
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::mergeChild(CNode<KT, DT> *parentNode, CNode<KT, DT> *childNode, int keyIndex)
 {
 	// 合并数据
-	insert(MINNUM_KEY, MINNUM_KEY + 1, parentNode->getKeyValue(keyIndex), ((CInternalNode<KeyType, DataType> *)childNode)->getChild(0));
+	insert(MINNUM_KEY, MINNUM_KEY + 1, parentNode->getKeyValue(keyIndex), ((CInternalNode<KT, DT> *)childNode)->getChild(0));
 	int i;
 	for (i = 1; i <= childNode->getKeyNum(); ++i)
 	{
-		insert(MINNUM_KEY + i, MINNUM_KEY + i + 1, childNode->getKeyValue(i - 1), ((CInternalNode<KeyType, DataType> *)childNode)->getChild(i));
+		insert(MINNUM_KEY + i, MINNUM_KEY + i + 1, childNode->getKeyValue(i - 1), ((CInternalNode<KT, DT> *)childNode)->getChild(i));
 	}
 	//父节点删除index的key
 	parentNode->removeKey(keyIndex, keyIndex + 1);
-	delete ((CInternalNode<KeyType, DataType> *)parentNode)->getChild(keyIndex + 1);
+	delete ((CInternalNode<KT, DT> *)parentNode)->getChild(keyIndex + 1);
 }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::removeKey(int keyIndex, int childIndex)
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::removeKey(int keyIndex, int childIndex)
 {
 	for (int i = 0; i < this->getKeyNum() - keyIndex - 1; ++i)
 	{
@@ -175,21 +160,21 @@ void CInternalNode<KeyType, DataType>::removeKey(int keyIndex, int childIndex)
 	this->setKeyNum(this->getKeyNum() - 1);
 }
 
-template <typename KeyType, typename DataType>
-void CInternalNode<KeyType, DataType>::borrowFrom(CNode<KeyType, DataType> *siblingNode, CNode<KeyType, DataType> *parentNode, int keyIndex, SIBLING_DIRECTION d)
+template <typename KT, typename DT>
+void CInternalNode<KT, DT>::borrowFrom(CNode<KT, DT> *siblingNode, CNode<KT, DT> *parentNode, int keyIndex, SIBLING_DIRECTION d)
 {
 	switch (d)
 	{
-	case LEFT: // 从左兄弟结点借
+	case LEFT: 
 	{
-		insert(0, 0, parentNode->getKeyValue(keyIndex), ((CInternalNode<KeyType, DataType> *)siblingNode)->getChild(siblingNode->getKeyNum()));
+		insert(0, 0, parentNode->getKeyValue(keyIndex), ((CInternalNode<KT, DT> *)siblingNode)->getChild(siblingNode->getKeyNum()));
 		parentNode->setKeyValue(keyIndex, siblingNode->getKeyValue(siblingNode->getKeyNum() - 1));
 		siblingNode->removeKey(siblingNode->getKeyNum() - 1, siblingNode->getKeyNum());
 	}
 	break;
-	case RIGHT: // 从右兄弟结点借
+	case RIGHT: 
 	{
-		insert(this->getKeyNum(), this->getKeyNum() + 1, parentNode->getKeyValue(keyIndex), ((CInternalNode<KeyType, DataType> *)siblingNode)->getChild(0));
+		insert(this->getKeyNum(), this->getKeyNum() + 1, parentNode->getKeyValue(keyIndex), ((CInternalNode<KT, DT> *)siblingNode)->getChild(0));
 		parentNode->setKeyValue(keyIndex, siblingNode->getKeyValue(0));
 		siblingNode->removeKey(0, 0);
 	}
@@ -199,8 +184,8 @@ void CInternalNode<KeyType, DataType>::borrowFrom(CNode<KeyType, DataType> *sibl
 	}
 }
 
-template <typename KeyType, typename DataType>
-int CInternalNode<KeyType, DataType>::getChildIndex(KeyType key, int keyIndex)
+template <typename KT, typename DT>
+int CInternalNode<KT, DT>::getChildIndex(KT key, int keyIndex)
 {
 	if (key >= this->getKeyValue(keyIndex))
 	{
@@ -213,8 +198,8 @@ int CInternalNode<KeyType, DataType>::getChildIndex(KeyType key, int keyIndex)
 }
 
 // CLeafNode
-template <typename KeyType, typename DataType>
-CLeafNode<KeyType, DataType>::CLeafNode()
+template <typename KT, typename DT>
+CLeafNode<KT, DT>::CLeafNode()
 {
 	this->setType(LEAF);
 	setLeftSibling(NULL);
@@ -223,58 +208,55 @@ CLeafNode<KeyType, DataType>::CLeafNode()
 	m_overflow_size = 0;
 }
 
-template <typename KeyType, typename DataType>
-CLeafNode<KeyType, DataType>::~CLeafNode()
+template <typename KT, typename DT>
+CLeafNode<KT, DT>::~CLeafNode()
 {
 }
 
-template <typename KeyType, typename DataType>
-CLeafNode<KeyType, DataType> *CLeafNode<KeyType, DataType>::getLeftSibling() const { return m_LeftSibling; }
+template <typename KT, typename DT>
+CLeafNode<KT, DT> *CLeafNode<KT, DT>::getLeftSibling() const { return m_LeftSibling; }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::setLeftSibling(CLeafNode<KeyType, DataType> *node) { m_LeftSibling = node; }
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::setLeftSibling(CLeafNode<KT, DT> *node) { m_LeftSibling = node; }
 
-template <typename KeyType, typename DataType>
-CLeafNode<KeyType, DataType> *CLeafNode<KeyType, DataType>::getRightSibling() const { return m_RightSibling; }
+template <typename KT, typename DT>
+CLeafNode<KT, DT> *CLeafNode<KT, DT>::getRightSibling() const { return m_RightSibling; }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::setRightSibling(CLeafNode<KeyType, DataType> *node) { m_RightSibling = node; }
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::setRightSibling(CLeafNode<KT, DT> *node) { m_RightSibling = node; }
 
-template <typename KeyType, typename DataType>
-DataType CLeafNode<KeyType, DataType>::getData(int i)
+template <typename KT, typename DT>
+DT CLeafNode<KT, DT>::getData(int i)
 {
 	this->pour();
 	return m_Data[i];
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::setData(int i, const DataType &data)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::setData(int i, const DT &data)
 {
 	m_Data[i] = data;
 }
 
-template <typename KeyType, typename DataType>
-DataType *CLeafNode<KeyType, DataType>::getDataAddr(int i)
+template <typename KT, typename DT>
+DT *CLeafNode<KT, DT>::getDataAddr(int i)
 {
 	this->pour();
 	return &(m_Data[i]);
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::clear()
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::clear()
 {
 	for (int i = 0; i < this->m_KeyNum; ++i)
 	{
-		// if type of m_Data is pointer
-		//delete m_Data[i];
-		//m_Data[i] = NULL;
+		
 	}
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::mainInsert(KeyType key, const DataType data)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::mainInsert(KT key, const DT data)
 {
-	// cout << "this way " << endl;
 	int i;
 	for (i = this->m_KeyNum; i >= 1 && this->m_KeyValues[i - 1] > key; --i)
 	{
@@ -286,10 +268,10 @@ void CLeafNode<KeyType, DataType>::mainInsert(KeyType key, const DataType data)
 	this->setKeyNum(this->m_KeyNum + 1);
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::insert(KeyType key, const DataType data)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::insert(KT key, const DT data)
 {
-	// mainInsert(key, data);
+
 
 	if (this->m_KeyNum + ORDER / 2 > MAXNUM_LEAF)
 	{
@@ -301,44 +283,44 @@ void CLeafNode<KeyType, DataType>::insert(KeyType key, const DataType data)
 	}
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::split(CNode<KeyType, DataType> *parentNode, int childIndex)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::split(CNode<KT, DT> *parentNode, int childIndex)
 {
 	this->pour();
-	CLeafNode<KeyType, DataType> *newNode = new CLeafNode<KeyType, DataType>; //分裂后的右节点
+	CLeafNode<KT, DT> *newNode = new CLeafNode<KT, DT>; 
 	this->setKeyNum(MINNUM_LEAF);
 	newNode->setKeyNum(MINNUM_LEAF + 1);
 	newNode->setRightSibling(getRightSibling());
 	setRightSibling(newNode);
 	newNode->setLeftSibling(this);
 	int i;
-	for (i = 0; i < MINNUM_LEAF + 1; ++i) // 拷贝关键字的值
+	for (i = 0; i < MINNUM_LEAF + 1; ++i) 
 	{
 		newNode->setKeyValue(i, this->m_KeyValues[i + MINNUM_LEAF]);
 	}
-	for (i = 0; i < MINNUM_LEAF + 1; ++i) // 拷贝数据
+	for (i = 0; i < MINNUM_LEAF + 1; ++i) 
 	{
 		newNode->setData(i, m_Data[i + MINNUM_LEAF]);
 	}
-	((CInternalNode<KeyType, DataType> *)parentNode)->insert(childIndex, childIndex + 1, this->m_KeyValues[MINNUM_LEAF], newNode);
+	((CInternalNode<KT, DT> *)parentNode)->insert(childIndex, childIndex + 1, this->m_KeyValues[MINNUM_LEAF], newNode);
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::mergeChild(CNode<KeyType, DataType> *parentNode, CNode<KeyType, DataType> *childNode, int keyIndex)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::mergeChild(CNode<KT, DT> *parentNode, CNode<KT, DT> *childNode, int keyIndex)
 {
 	this->pour();
-	// 合并数据
+	
 	for (int i = 0; i < childNode->getKeyNum(); ++i)
 	{
 		insert(childNode->getKeyValue(i), ((CLeafNode *)childNode)->getData(i));
 	}
 	setRightSibling(((CLeafNode *)childNode)->getRightSibling());
-	//父节点删除index的key，
+	
 	parentNode->removeKey(keyIndex, keyIndex + 1);
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::removeKey(int keyIndex, int childIndex)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::removeKey(int keyIndex, int childIndex)
 {
 	this->pour();
 	for (int i = keyIndex; i < this->getKeyNum() - 1; ++i)
@@ -349,20 +331,20 @@ void CLeafNode<KeyType, DataType>::removeKey(int keyIndex, int childIndex)
 	this->setKeyNum(this->getKeyNum() - 1);
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::borrowFrom(CNode<KeyType, DataType> *siblingNode, CNode<KeyType, DataType> *parentNode, int keyIndex, SIBLING_DIRECTION d)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::borrowFrom(CNode<KT, DT> *siblingNode, CNode<KT, DT> *parentNode, int keyIndex, SIBLING_DIRECTION d)
 {
 	this->pour();
 	switch (d)
 	{
-	case LEFT: // 从左兄弟结点借
+	case LEFT: 
 	{
 		insert(siblingNode->getKeyValue(siblingNode->getKeyNum() - 1), ((CLeafNode *)siblingNode)->getData(siblingNode->getKeyNum() - 1));
 		siblingNode->removeKey(siblingNode->getKeyNum() - 1, siblingNode->getKeyNum() - 1);
 		parentNode->setKeyValue(keyIndex, this->getKeyValue(0));
 	}
 	break;
-	case RIGHT: // 从右兄弟结点借
+	case RIGHT: 
 	{
 		insert(siblingNode->getKeyValue(0), ((CLeafNode *)siblingNode)->getData(0));
 		siblingNode->removeKey(0, 0);
@@ -374,33 +356,33 @@ void CLeafNode<KeyType, DataType>::borrowFrom(CNode<KeyType, DataType> *siblingN
 	}
 }
 
-template <typename KeyType, typename DataType>
-int CLeafNode<KeyType, DataType>::getChildIndex(KeyType key, int keyIndex)
+template <typename KT, typename DT>
+int CLeafNode<KT, DT>::getChildIndex(KT key, int keyIndex)
 {
 	this->pour();
 	return keyIndex;
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::pour()
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::pour()
 {
 	if (m_overflow_size == 0)
 		return;
-	// cout << "overflow size is: " << m_overflow_size << endl;
+	
 	sortOverflow();
-	// cout << "again, overflow size is: " << m_overflow_size << endl;
+	
 	for (int k = 0; k < m_overflow_size; k++)
 	{
-		KeyType key = m_keys_overflow[k];
-		DataType data = m_data_overflow[k];
+		KT key = m_keys_overflow[k];
+		DT data = m_data_overflow[k];
 
 		mainInsert(key, data);
 	}
 	m_overflow_size = 0;
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::sortOverflow()
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::sortOverflow()
 {
 	int end_of_sorted = 0;
 
@@ -426,8 +408,8 @@ void CLeafNode<KeyType, DataType>::sortOverflow()
 	}
 }
 
-template <typename KeyType, typename DataType>
-void CLeafNode<KeyType, DataType>::overflowInsert(KeyType key, const DataType data)
+template <typename KT, typename DT>
+void CLeafNode<KT, DT>::overflowInsert(KT key, const DT data)
 {
 	if (m_overflow_size >= ORDER / 2)
 		pour();

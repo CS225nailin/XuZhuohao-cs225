@@ -158,7 +158,7 @@ void report_weekly_monthly(int day, LinkedList* Local, CentralQueue<int>* Centra
                 cout<<temp_out->p<<"  "<<temp_out->age<<"  "<<temp_out->ID<<"  "<< day-temp_out->regday<<endl;
                  }
             }
-            temp = Local->head;
+            temp = Local->head;//123
             counter = 0;
             cout<<"The list that people is registered with a appointentment"<<endl<<endl;
             cout<<"profession"<<" "<<"age"<<" "<<"ID"<<" "<<"waiting day"<<endl;
