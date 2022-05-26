@@ -5,6 +5,7 @@
 #include <string>
 using namespace std;
 //deque是啥
+//一个队列把
 
 void main()
 {
