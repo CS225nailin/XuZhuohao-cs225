@@ -22,17 +22,14 @@ int appday=10000;
 int regday;
 int waitingday=0;
 void update(Person_Node *patient,int day);
-
-
-//private:
 //information to calculate the priority
 int hospital;
 string name;
+
 int ID;
 int profession;
 int risk; //  0 1 2 3 no low midium high
 int age;
-
 //other information
 int person_state;// 排队预约治疗 0 1 2 3 
 bool withdraw; // 退出+14
