@@ -6,6 +6,7 @@
 using namespace std;
 //deque是啥
 //一个队列把
+//怎么说
 
 void main()
 {
